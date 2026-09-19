@@ -96,3 +96,4 @@ INFO:     Uvicorn running on http://127.0.0.1:7001 (Press CTRL+C to quit)
 2026-09-19 20:25:20,764 - httpx - INFO - HTTP Request: POST http://127.0.0.1:11434/v1/chat/completions "HTTP/1.1 200 OK"
 2026-09-19 20:25:20,766 - src.llm_core - INFO - LLM async call to http://127.0.0.1:11434/v1/chat/completions succeeded in 1.53s (attempt 1)
 2026-09-19 20:25:20,795 - routes.chat_helpers - INFO - Auto-named session f6e98178-a068-4c09-a391-197d3c136d7e: Conversation Begins Today
+2026-09-19 21:21:08,710 - src.upload_handler - INFO - Rate-limit cleanup: removed 0 IPs, 0 timestamps.
