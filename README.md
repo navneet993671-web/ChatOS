@@ -4,9 +4,10 @@
  ⊹ ࣪ ˖ ૮( ˶ᵔ ᵕ ᵔ˶ )っ  Misantropic vers. 1.0
 ───────────────────────────────────────────────
 
-![Misantropic](docs/misantropic.jpg)
+![Misantropic](Screenshot 2026-09-19 142007.jpg)
 
-A self-hosted AI workspace -- meant to be the self-hosted version of the UI experience you get from ChatGPT and Claude. But with more jank and fun. Running on your own hardware, with your own data -- local-first, privacy-first, and no trojan.
+A self-hosted AI workspace -- meant to be the self-hosted version of the UI experience you get from ChatGPT and Claude. But with more jank and fun. Running on your own hardwa<img width="1920" height="1080" alt="Screenshot 2026-09-19 142007" src="https://github.com/user-attachments/assets/a1f2b973-fce7-418e-9d41-4b93d23c4869" />
+re, with your own data -- local-first, privacy-first, and no trojan.
 
 ## Features
   - **Chat** -- chat with any local model or API; adding them is super simple.<br>　<sub>vLLM · llama.cpp · Ollama · OpenRouter · OpenAI</sub>
