@@ -1,20 +1,60 @@
+# Misantropic — Docker Compose
+#
+# Two ways to run:
+#
+#   1. Browser-facing stack, default:
+#         docker compose up -d --build
+#      -> http://localhost:7000   (nginx front end)
+#
+#   2. With a containerised Ollama instead of host Ollama:
+#         docker compose --profile ollama up -d --build
+#      then set OLLAMA_BASE_URL=http://ollama:11434/v1 in .env
+#
+# Service names:
+#   frontend  nginx, publishes the app on ${APP_PORT:-7000}
+#   backend   uvicorn/FastAPI, reachable in-network at backend:7000
+#   ollama    optional (profile: ollama)
+#   chromadb, searxng, ntfy   bundled supporting services
+#
+# The rename from the legacy service name `odysseus` to `backend` changes the
+# compose DNS alias. Anything outside this file that addressed the old alias
+# (`docker compose exec odysseus ...`, an external proxy, a pinned
+# container_name) must be updated too — see MISANTROPIC_AUDIT.md.
+
 services:
-  odysseus:
-    build: .
+  frontend:
+    image: docker.io/nginx:alpine
     ports:
       - "${APP_BIND:-127.0.0.1}:${APP_PORT:-7000}:7000"
     volumes:
+      # Full nginx config (http + server block) so the WebSocket upgrade map
+      # and the long LLM timeouts travel with the repo.
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  backend:
+    build: .
+    # No host port by default: nginx is the only browser-facing entrypoint.
+    # Uncomment to reach uvicorn directly for debugging.
+    # ports:
+    #   - "${BACKEND_BIND:-127.0.0.1}:${BACKEND_PORT:-7001}:7000"
+    expose:
+      - "7000"
+    volumes:
       - ./data:/app/data
       - ./logs:/app/logs
-      # Cookbook remote-server SSH identity. Odysseus can generate a key here;
-      # add the shown public key to each remote server's authorized_keys.
+      # Cookbook remote-server SSH identity. Misantropic can generate a key
+      # here; add the shown public key to each remote server's authorized_keys.
       - ./data/ssh:/app/.ssh
-      # Cookbook local model cache. Inside Docker, "Local" means the Odysseus
-      # container, so persist its HuggingFace cache under ./data/huggingface.
+      # Cookbook local model cache. Inside Docker, "Local" means the
+      # Misantropic container, so persist its HuggingFace cache under
+      # ./data/huggingface.
       - ./data/huggingface:/app/.cache/huggingface
       # Cookbook-installed Python CLIs/packages (vLLM, llama-cpp-python, etc.)
-      # land under /app/.local for the odysseus user. Persist them so a
-      # container recreate does not silently remove installed serve engines.
+      # land under /app/.local. Persist them so a container recreate does not
+      # silently remove installed serve engines.
       - ./data/local:/app/.local
     extra_hosts:
       # Lets the container reach local services on the Docker host, including
@@ -26,14 +66,10 @@ services:
       - SEARXNG_INSTANCE=http://searxng:8080
       - CHROMADB_HOST=chromadb
       - CHROMADB_PORT=8000
-      # PUID / PGID — the user/group the container drops to before
-      # running uvicorn (entrypoint also chowns /app/data + /app/logs
-      # to match, so bind-mounted files stay editable from the host).
-      # 1000 is the default first user on most Linux installs. If your
-      # host user has a different id, override here or via .env, e.g.:
-      #   PUID=1001
-      #   PGID=1001
-      # Find yours with:  id -u  /  id -g
+      # PUID / PGID — the user/group the container drops to before running
+      # uvicorn (the entrypoint also chowns /app/data + /app/logs to match, so
+      # bind-mounted files stay editable from the host). 1000 is the default
+      # first user on most Linux installs. Find yours with: id -u / id -g
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
     depends_on:
@@ -41,6 +77,27 @@ services:
         condition: service_healthy
       chromadb:
         condition: service_started
+    restart: unless-stopped
+
+  # Containerised Ollama. Opt in so the default `docker compose up` keeps
+  # using whatever Ollama you already run on the host (the historical
+  # behaviour), because two Ollama instances on one machine will fight over
+  # port 11434 and GPU memory.
+  #
+  #   docker compose --profile ollama up -d
+  #
+  # Then point the app at it by setting in .env:
+  #   OLLAMA_BASE_URL=http://ollama:11434/v1
+  #
+  # For GPU access add the matching overlay line to .env:
+  #   COMPOSE_FILE=docker-compose.yml:docker/gpu.nvidia.yml:docker/gpu.ollama.yml
+  ollama:
+    image: docker.io/ollama/ollama:latest
+    profiles: ["ollama"]
+    volumes:
+      - ollama-data:/root/.ollama
+    ports:
+      - "127.0.0.1:${OLLAMA_PORT:-11434}:11434"
     restart: unless-stopped
 
   chromadb:
@@ -60,6 +117,10 @@ services:
       - -c
       - |
         set -eu
+        # NOTE: `odysseus-local-searxng-json-2026-05-30` is deliberately NOT
+        # renamed. It is a sentinel written into the persisted searxng-data
+        # volume; changing it makes this grep match an existing settings.yml
+        # and silently regenerates the SearXNG secret on every boot.
         if [ ! -s /etc/searxng/settings.yml ] || grep -q 'odysseus-local-searxng-json-2026-05-30\|__SEARXNG_SECRET__' /etc/searxng/settings.yml; then
           secret="$${SEARXNG_SECRET:-}"
           if [ -z "$$secret" ]; then
@@ -99,3 +160,4 @@ volumes:
   searxng-data:
   chromadb-data:
   ntfy-cache:
+  ollama-data:

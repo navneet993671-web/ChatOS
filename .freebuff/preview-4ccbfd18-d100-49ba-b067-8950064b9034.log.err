@@ -1,0 +1,891 @@
+2026-09-19 13:41:15,105 - core.auth - INFO - Auth config loaded
+2026-09-19 13:41:15,117 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 13:41:15,118 - app - INFO - Auth middleware enabled (AUTH_ENABLED=true)
+2026-09-19 13:41:15,782 - services.youtube.youtube_handler - INFO - YouTube transcript API available
+2026-09-19 13:41:15,966 - httpx - INFO - HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 404 Not Found"
+2026-09-19 13:41:15,968 - src.embeddings - WARNING - HTTP embedding API unavailable (Client error '404 Not Found' for url 'http://localhost:11434/v1/embeddings'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404); using local FastEmbed for the rest of this process
+2026-09-19 13:41:17,818 - src.embeddings - INFO - FastEmbed loaded model=sentence-transformers/all-MiniLM-L6-v2
+2026-09-19 13:41:17,866 - src.embeddings - INFO - Embedding dimension: 384 (model=sentence-transformers/all-MiniLM-L6-v2)
+2026-09-19 13:41:17,868 - src.embeddings - INFO - Using local FastEmbed: model=sentence-transformers/all-MiniLM-L6-v2
+2026-09-19 13:41:17,869 - src.rag_vector - INFO - Embedding: local://fastembed model=sentence-transformers/all-MiniLM-L6-v2
+2026-09-19 13:41:23,134 - src.rag_vector - ERROR - VectorRAG init failed: ChromaDB is not reachable at localhost:8100. Start the ChromaDB service (e.g. `docker compose up chromadb`) or set CHROMADB_HOST / CHROMADB_PORT to point at a running instance.
+2026-09-19 13:41:23,135 - src.rag_singleton - WARNING - VectorRAG created but not healthy, will retry later
+2026-09-19 13:41:23,165 - app - INFO - Vector document RAG not available at startup (ChromaDB may not be reachable yet — routes will retry lazily)
+2026-09-19 13:41:23,426 - core.session_manager - INFO - Loaded 10 session(s) (metadata only)
+2026-09-19 13:41:23,432 - src.upload_handler - WARNING - python-magic not available, falling back to basic detection
+2026-09-19 13:41:23,435 - src.personal_docs - INFO - Refreshed index: 0 documents from 1 directories
+2026-09-19 13:41:23,664 - src.embeddings - INFO - FastEmbed loaded model=sentence-transformers/all-MiniLM-L6-v2
+2026-09-19 13:41:23,705 - src.embeddings - INFO - Embedding dimension: 384 (model=sentence-transformers/all-MiniLM-L6-v2)
+2026-09-19 13:41:23,706 - src.embeddings - INFO - Using local FastEmbed: model=sentence-transformers/all-MiniLM-L6-v2
+2026-09-19 13:41:23,707 - src.memory_vector - INFO - MemoryVectorStore using embeddings: local://fastembed
+2026-09-19 13:41:27,727 - src.memory_vector - ERROR - MemoryVectorStore init failed: ChromaDB is not reachable at localhost:8100. Start the ChromaDB service (e.g. `docker compose up chromadb`) or set CHROMADB_HOST / CHROMADB_PORT to point at a running instance.
+2026-09-19 13:41:27,729 - src.app_initializer - WARNING - MemoryVectorStore DEGRADED: ChromaDB vector memory unavailable
+2026-09-19 13:41:27,762 - src.research_handler - INFO - Legacy research_engine.py not found — DeepResearcher only
+2026-09-19 13:41:27,800 - app - INFO - TTS service initialized (provider managed via admin settings)
+2026-09-19 13:41:28,451 - app - INFO - STT service initialized (provider managed via settings)
+2026-09-19 13:41:28,492 - app - INFO - Voice service initialized (enabled=True, stt=local, tts=local)
+2026-09-19 13:41:28,640 - app - INFO - Video editing initialized (server_editing=False, ffmpeg=not installed)
+2026-09-19 13:41:28,788 - app - INFO - MCP routes initialized
+2026-09-19 13:41:28,791 - app - INFO - AI interaction tools initialized (session, memory, RAG, UI control)
+2026-09-19 13:41:28,872 - app - INFO - Webhook & API token routes initialized
+INFO:     Started server process [12996]
+INFO:     Waiting for application startup.
+2026-09-19 13:41:29,016 - app - INFO - Application starting up...
+2026-09-19 13:41:29,025 - src.bg_monitor - INFO - Background-job monitor started (poll 5s)
+2026-09-19 13:41:29,062 - src.task_scheduler - INFO - Task scheduler started (concurrency cap: 1)
+2026-09-19 13:41:29,067 - app - INFO - Application startup complete
+2026-09-19 13:41:29,073 - src.builtin_mcp - INFO - NPX binary resolved to: C:\Program Files\nodejs\npx.CMD
+INFO:     Application startup complete.
+2026-09-19 13:41:29,281 - src.embeddings - INFO - FastEmbed loaded model=sentence-transformers/all-MiniLM-L6-v2
+2026-09-19 13:41:29,365 - src.embeddings - INFO - Embedding dimension: 384 (model=sentence-transformers/all-MiniLM-L6-v2)
+2026-09-19 13:41:29,380 - src.embeddings - INFO - Using local FastEmbed: model=sentence-transformers/all-MiniLM-L6-v2
+INFO:     Uvicorn running on http://127.0.0.1:7001 (Press CTRL+C to quit)
+2026-09-19 13:41:33,484 - src.tool_index - WARNING - ToolIndex init failed (will retry in 30.0s): ChromaDB is not reachable at localhost:8100. Start the ChromaDB service (e.g. `docker compose up chromadb`) or set CHROMADB_HOST / CHROMADB_PORT to point at a running instance.
+2026-09-19 13:41:34,737 - routes.email_pollers - INFO - Started scheduled email poller
+2026-09-19 13:41:34,785 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:41:34,788 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+Traceback (most recent call last):
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\mcp_servers\rag_server.py", line 46, in <module>
+    @server.list_tools()
+AttributeError: 'Server' object has no attribute 'list_tools'
+Traceback (most recent call last):
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\mcp_servers\memory_server.py", line 47, in <module>
+    @server.list_tools()
+AttributeError: 'Server' object has no attribute 'list_tools'
+2026-09-19 13:41:34,969 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+Traceback (most recent call last):
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\mcp_servers\image_gen_server.py", line 22, in <module>
+    @server.list_tools()
+AttributeError: 'Server' object has no attribute 'list_tools'
+Traceback (most recent call last):
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\mcp_servers\email_server.py", line 1036, in <module>
+    @server.list_tools()
+AttributeError: 'Server' object has no attribute 'list_tools'
+2026-09-19 13:41:35,341 - src.mcp_manager - ERROR - Failed to connect MCP server Built-in: RAG (rag): Connection closed
+2026-09-19 13:41:35,342 - src.builtin_mcp - WARNING - Built-in MCP server failed to connect: Built-in: RAG
+2026-09-19 13:41:35,366 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-407' coro=<<async_generator_athrow without __name__>()> exception=RuntimeError('Attempted to exit cancel scope in a different task than it was entered in')>
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  | exceptiongroup.BaseExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\mcp\client\stdio.py", line 204, in stdio_client
+    |     yield read_stream, write_stream
+    | GeneratorExit
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\mcp\client\stdio.py", line 200, in stdio_client
+    async with anyio.create_task_group() as tg:
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 853, in __aexit__
+    if self.cancel_scope.__exit__(type(exc), exc, exc.__traceback__):
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 464, in __exit__
+    raise RuntimeError(
+RuntimeError: Attempted to exit cancel scope in a different task than it was entered in
+2026-09-19 13:41:35,375 - src.mcp_manager - ERROR - Failed to connect MCP server Built-in: Memory (memory): Connection closed
+2026-09-19 13:41:35,378 - src.builtin_mcp - WARNING - Built-in MCP server failed to connect: Built-in: Memory
+2026-09-19 13:41:35,396 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-410' coro=<<async_generator_athrow without __name__>()> exception=RuntimeError('Attempted to exit cancel scope in a different task than it was entered in')>
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  | exceptiongroup.BaseExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\mcp\client\stdio.py", line 204, in stdio_client
+    |     yield read_stream, write_stream
+    | GeneratorExit
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\mcp\client\stdio.py", line 200, in stdio_client
+    async with anyio.create_task_group() as tg:
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 853, in __aexit__
+    if self.cancel_scope.__exit__(type(exc), exc, exc.__traceback__):
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 464, in __exit__
+    raise RuntimeError(
+RuntimeError: Attempted to exit cancel scope in a different task than it was entered in
+2026-09-19 13:41:35,423 - src.mcp_manager - ERROR - Failed to connect MCP server Built-in: Image Generation (image_gen): Connection closed
+2026-09-19 13:41:35,424 - src.builtin_mcp - WARNING - Built-in MCP server failed to connect: Built-in: Image Generation
+2026-09-19 13:41:35,438 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-413' coro=<<async_generator_athrow without __name__>()> exception=RuntimeError('Attempted to exit cancel scope in a different task than it was entered in')>
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  | exceptiongroup.BaseExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\mcp\client\stdio.py", line 204, in stdio_client
+    |     yield read_stream, write_stream
+    | GeneratorExit
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\mcp\client\stdio.py", line 200, in stdio_client
+    async with anyio.create_task_group() as tg:
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 853, in __aexit__
+    if self.cancel_scope.__exit__(type(exc), exc, exc.__traceback__):
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 464, in __exit__
+    raise RuntimeError(
+RuntimeError: Attempted to exit cancel scope in a different task than it was entered in
+2026-09-19 13:41:35,592 - src.mcp_manager - ERROR - Failed to connect MCP server Built-in: Email (email): Connection closed
+2026-09-19 13:41:35,593 - src.builtin_mcp - WARNING - Built-in MCP server failed to connect: Built-in: Email
+2026-09-19 13:41:35,595 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-424' coro=<<async_generator_athrow without __name__>()> exception=RuntimeError('Attempted to exit cancel scope in a different task than it was entered in')>
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  | exceptiongroup.BaseExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\mcp\client\stdio.py", line 204, in stdio_client
+    |     yield read_stream, write_stream
+    | GeneratorExit
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\mcp\client\stdio.py", line 200, in stdio_client
+    async with anyio.create_task_group() as tg:
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 853, in __aexit__
+    if self.cancel_scope.__exit__(type(exc), exc, exc.__traceback__):
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 464, in __exit__
+    raise RuntimeError(
+RuntimeError: Attempted to exit cancel scope in a different task than it was entered in
+2026-09-19 13:41:37,525 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:41:37,526 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:41:38,432 - src.builtin_mcp - WARNING - Built-in: Browser is not available.
+  Reason: npm package '@playwright/mcp@latest' is not installed in the npx cache.
+  Impact: tools provided by this MCP server will be unavailable.
+  Fix:    npx.CMD -y @playwright/mcp@latest --version
+          (run once, then restart Misantropic)
+  Notes:  this server is optional; see README.md 'Built-in MCP servers' for details.
+2026-09-19 13:41:38,862 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:41:41,599 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:42:34,541 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:42:34,543 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:42:38,633 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:42:45,569 - core.auth - INFO - Auth config loaded
+2026-09-19 13:42:45,572 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 13:42:45,574 - core.auth - INFO - Auth config loaded
+2026-09-19 13:42:45,575 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 13:43:02,785 - core.auth - INFO - Auth config loaded
+2026-09-19 13:43:02,789 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 13:43:02,791 - core.auth - INFO - Auth config loaded
+2026-09-19 13:43:02,792 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 13:43:24,223 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:43:24,224 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:43:24,403 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 13:43:27,189 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:43:27,190 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:43:28,295 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:43:31,249 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:43:34,537 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:43:34,538 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:43:38,620 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:44:02,673 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:44:02,679 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:44:02,784 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 13:44:05,644 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:44:05,646 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:44:06,775 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:44:09,731 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:44:25,086 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:44:25,088 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:44:29,165 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:45:02,641 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:45:02,642 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:45:06,727 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:45:25,056 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:45:25,057 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:45:29,146 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:46:02,636 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:46:02,638 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:46:06,715 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:46:25,050 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:46:25,051 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:46:29,134 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:47:02,656 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:47:02,657 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:47:06,723 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:47:17,845 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:47:17,852 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:47:17,949 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 13:47:20,796 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:47:20,798 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:47:21,929 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:47:24,873 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:47:25,053 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:47:25,055 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:47:29,141 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:47:36,079 - core.auth - INFO - Auth config loaded
+2026-09-19 13:47:36,082 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 13:47:36,083 - core.auth - INFO - Auth config loaded
+2026-09-19 13:47:36,085 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 13:47:40,063 - core.auth - INFO - Auth config loaded
+2026-09-19 13:47:40,067 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 13:47:40,069 - core.auth - INFO - Auth config loaded
+2026-09-19 13:47:40,071 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 13:48:17,792 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:48:17,793 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:48:21,865 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:48:35,559 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:48:35,560 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:48:35,596 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 13:48:35,869 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 13:48:59,100 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:48:59,104 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:49:03,176 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:49:17,804 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:49:17,805 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:49:21,893 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:49:30,730 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 13:49:52,615 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 13:49:59,093 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:49:59,095 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:50:03,167 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:50:17,796 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:50:17,797 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:50:21,880 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:50:59,080 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:50:59,081 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:51:03,161 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:51:18,072 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:51:18,072 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:51:22,165 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:51:59,108 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:51:59,109 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:52:03,228 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:52:18,056 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:52:18,057 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:52:22,115 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:52:59,093 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:52:59,095 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:53:03,184 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:53:18,046 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:53:18,047 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:53:22,125 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:53:52,550 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:53:52,552 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:53:56,621 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:54:25,076 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:54:25,077 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:54:29,147 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:54:59,093 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:54:59,094 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:55:03,160 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:55:17,801 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:55:17,802 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:55:21,908 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:55:32,023 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 13:55:59,073 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:55:59,076 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:56:03,155 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:56:10,668 - core.auth - INFO - Auth config loaded
+2026-09-19 13:56:10,672 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 13:56:10,674 - core.auth - INFO - Auth config loaded
+2026-09-19 13:56:10,676 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 13:56:15,854 - core.auth - INFO - Auth config loaded
+2026-09-19 13:56:15,858 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 13:56:15,859 - core.auth - INFO - Auth config loaded
+2026-09-19 13:56:15,861 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 13:56:17,798 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:56:17,799 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:56:20,956 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 13:56:21,874 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:56:40,044 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:56:40,050 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:56:40,107 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 13:56:42,968 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:56:42,970 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:56:44,120 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:56:47,040 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:56:59,085 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:56:59,087 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:57:03,161 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:57:40,053 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:57:40,054 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:57:44,129 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:57:59,085 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:57:59,087 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:58:03,150 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:58:40,057 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:58:40,058 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:58:44,134 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:58:59,094 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:58:59,095 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:59:03,176 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:59:40,059 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:59:40,059 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:59:44,149 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 13:59:59,117 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 13:59:59,119 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:00:03,184 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:00:39,967 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:00:39,969 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:00:44,023 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:00:59,080 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:00:59,081 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:01:03,164 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:01:39,971 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:01:39,973 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:01:44,060 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:01:44,237 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:01:44,242 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:01:44,293 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:01:47,185 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:01:47,186 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:01:48,327 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:01:51,272 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:01:59,076 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:01:59,077 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:02:03,151 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:02:29,431 - core.session_manager - INFO - Deleted session 07152a24-a90f-4e44-9285-8df771472bdc
+2026-09-19 14:02:31,460 - core.session_manager - INFO - Deleted session 355243c8-f4f4-413a-8c12-d6775c507c8c
+2026-09-19 14:02:33,383 - core.session_manager - INFO - Deleted session 0d2d1395-3478-4089-8be3-3df8125d7fb0
+2026-09-19 14:02:36,535 - core.session_manager - INFO - Deleted session 1b3ad120-0540-4642-bf87-f08312664bc6
+2026-09-19 14:02:38,857 - core.session_manager - INFO - Deleted session 8f4ab249-aa2b-4e55-a4b5-fddb020e6541
+2026-09-19 14:02:44,184 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:02:44,187 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:02:48,266 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:02:59,071 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:02:59,073 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:03:03,152 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:03:45,054 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:03:45,056 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:03:49,123 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:03:59,084 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:03:59,086 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:04:03,157 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:04:34,325 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:04:34,326 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:04:38,402 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:04:45,056 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:04:45,057 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:04:49,144 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:05:25,076 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:05:25,078 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:05:29,146 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:05:45,031 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:05:45,033 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:05:49,104 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:06:24,188 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:06:24,190 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:06:28,249 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:06:45,044 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:06:45,046 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:06:49,115 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:07:25,092 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:07:25,096 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:07:29,184 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:07:44,178 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:07:44,178 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:07:48,257 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:08:05,004 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:08:05,006 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:08:05,084 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:08:07,938 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:08:07,940 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:08:09,072 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:08:12,023 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:08:29,403 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:08:29,415 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:08:33,497 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:09:05,085 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:09:05,086 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:09:09,157 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:09:25,071 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:09:25,072 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:09:29,148 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:10:05,044 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:10:05,045 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:10:09,105 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:10:25,080 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:10:25,082 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:10:29,164 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:11:05,072 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:11:05,073 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:11:09,157 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:11:25,114 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:11:25,118 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:11:29,175 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:11:59,220 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:11:59,222 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:11:59,276 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:11:59,587 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:11:59,757 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:12:27,616 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:12:27,623 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:12:27,757 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:12:30,593 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:12:30,594 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:12:31,710 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:12:34,657 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:12:59,109 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:12:59,112 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:13:03,173 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:13:18,053 - src.event_bus - INFO - Event 'session_created' triggered task 'Chat Sessions Tidy' (every 5)
+2026-09-19 14:13:18,167 - src.task_scheduler - INFO - Task 'Chat Sessions Tidy' stopped by user
+2026-09-19 14:13:18,299 - routes.chat_routes - INFO - [doc-inject] chat_mode=chat, active_doc_id=''
+2026-09-19 14:13:18,377 - src.chat_handler - INFO - Preset None: temp=1.0, max_tokens=0
+2026-09-19 14:13:18,495 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:13:18,560 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/slots "HTTP/1.1 404 Not Found"
+2026-09-19 14:13:18,597 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:13:18,599 - src.model_context - INFO - Context length for llama3.2:1b: 128000
+2026-09-19 14:13:18,610 - routes.chat_routes - INFO - [doc-inject] no active doc for session c7090dee-2430-430d-8efe-c770e405be4d
+2026-09-19 14:13:27,753 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:13:27,757 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:13:29,089 - httpx - INFO - HTTP Request: POST http://127.0.0.1:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2026-09-19 14:13:31,843 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:13:59,148 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:13:59,151 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:14:03,237 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:14:24,193 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:14:24,194 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:14:27,631 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:14:27,644 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:14:28,254 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:14:31,707 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:14:51,056 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:14:51,058 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:14:51,091 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:14:51,392 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:15:25,072 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:15:25,073 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:15:29,223 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:15:29,252 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:15:29,255 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:15:29,260 - routes.chat_routes - INFO - [doc-inject] chat_mode=chat, active_doc_id=''
+2026-09-19 14:15:29,330 - src.chat_handler - INFO - Preset None: temp=1.0, max_tokens=0
+2026-09-19 14:15:29,399 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:15:29,425 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/slots "HTTP/1.1 404 Not Found"
+2026-09-19 14:15:29,557 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:15:29,561 - src.model_context - INFO - Context length for llama3.2:1b: 128000
+2026-09-19 14:15:29,566 - routes.chat_routes - INFO - [doc-inject] no active doc for session c7090dee-2430-430d-8efe-c770e405be4d
+2026-09-19 14:15:30,194 - httpx - INFO - HTTP Request: POST http://127.0.0.1:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2026-09-19 14:15:33,332 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:16:24,174 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:16:24,176 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:16:27,608 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:16:27,608 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:16:28,242 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:16:31,691 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:17:25,121 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:17:25,132 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:17:27,606 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:17:27,608 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:17:29,230 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:17:31,662 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:18:27,608 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:18:27,610 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:18:31,673 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:18:59,111 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:18:59,114 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:19:03,187 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:19:27,610 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:19:27,611 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:19:31,680 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:19:59,097 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:19:59,098 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:20:03,164 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:20:14,105 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:20:16,189 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:20:24,181 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:20:24,181 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:20:27,613 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:20:27,614 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:20:28,271 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:20:31,676 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:21:24,255 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:21:25,113 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:21:25,114 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:21:27,595 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:21:27,597 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:21:27,958 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:21:29,215 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:21:31,690 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:22:24,182 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:22:24,183 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:22:27,616 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:22:27,617 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:22:28,267 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:22:31,700 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:23:25,079 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:23:25,081 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:23:27,625 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:23:27,627 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:23:29,134 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:23:31,666 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:24:24,183 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:24:24,186 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:24:27,613 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:24:27,614 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:24:28,251 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:24:31,700 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:25:25,074 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:25:25,075 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:25:27,613 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:25:27,616 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:25:29,138 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:25:31,672 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:26:27,614 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:26:27,616 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:26:31,692 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:26:59,123 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:26:59,124 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:27:03,165 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:27:27,600 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:27:27,601 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:27:31,679 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:27:59,122 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:27:59,124 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:28:03,185 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:28:27,609 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:28:27,611 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:28:31,673 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:28:59,145 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:28:59,149 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:29:03,223 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:29:27,595 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:29:27,596 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:29:31,678 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:29:46,107 - core.auth - INFO - Auth config loaded
+2026-09-19 14:29:46,125 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 14:29:46,126 - core.auth - INFO - Auth config loaded
+2026-09-19 14:29:46,128 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 14:29:59,077 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:29:59,081 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:30:03,151 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:30:23,537 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:30:23,538 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:30:23,588 - core.session_manager - INFO - Deleted session c7090dee-2430-430d-8efe-c770e405be4d
+2026-09-19 14:30:23,616 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:30:25,797 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:30:25,799 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:30:25,801 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:30:26,033 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:30:26,531 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:30:26,532 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:30:27,622 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:30:30,586 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:30:49,078 - routes.chat_routes - INFO - [doc-inject] chat_mode=chat, active_doc_id=''
+2026-09-19 14:30:49,152 - src.chat_handler - INFO - Preset None: temp=1.0, max_tokens=0
+2026-09-19 14:30:49,213 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:30:49,241 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/slots "HTTP/1.1 404 Not Found"
+2026-09-19 14:30:49,270 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:30:49,273 - src.model_context - INFO - Context length for llama3.2:1b: 128000
+2026-09-19 14:30:49,275 - routes.chat_routes - INFO - [doc-inject] no active doc for session 17ec262b-3085-4d5a-94db-29bd24a3672d
+2026-09-19 14:30:59,097 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:30:59,098 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:31:03,157 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:31:04,668 - routes.chat_routes - INFO - [doc-inject] chat_mode=chat, active_doc_id=''
+2026-09-19 14:31:04,742 - src.chat_handler - INFO - Preset None: temp=1.0, max_tokens=0
+2026-09-19 14:31:04,803 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:31:05,153 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/slots "HTTP/1.1 404 Not Found"
+2026-09-19 14:31:05,191 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:31:05,194 - src.model_context - INFO - Context length for llama3.2:1b: 128000
+2026-09-19 14:31:05,200 - routes.chat_routes - INFO - [doc-inject] no active doc for session 17ec262b-3085-4d5a-94db-29bd24a3672d
+2026-09-19 14:31:10,494 - httpx - INFO - HTTP Request: POST http://127.0.0.1:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2026-09-19 14:31:23,541 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:31:23,543 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:31:24,659 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:31:24,660 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:31:27,642 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:31:28,699 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:32:03,622 - httpx - INFO - HTTP Request: POST http://127.0.0.1:11434/v1/chat/completions "HTTP/1.1 404 Not Found"
+2026-09-19 14:32:03,635 - src.llm_core - WARNING - LLM async call to http://127.0.0.1:11434/v1/chat/completions failed in 0.09s (attempt 1): HTTP 404 Ollama returned 404 — check the base URL and model name. (model 'nomic-embed-text:latest' not found)
+2026-09-19 14:32:03,660 - routes.chat_helpers - ERROR - Auto-name failed for 17ec262b-3085-4d5a-94db-29bd24a3672d: 404: Ollama returned 404 — check the base URL and model name. (model 'nomic-embed-text:latest' not found)
+Traceback (most recent call last):
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\routes\chat_helpers.py", line 158, in auto_name_session
+    title = await llm_call_async(
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\src\llm_core.py", line 712, in llm_call_async
+    raise HTTPException(r.status_code, friendly)
+fastapi.exceptions.HTTPException: 404: Ollama returned 404 — check the base URL and model name. (model 'nomic-embed-text:latest' not found)
+
+2026-09-19 14:32:03,722 - httpx - INFO - HTTP Request: POST http://127.0.0.1:11434/v1/chat/completions "HTTP/1.1 404 Not Found"
+2026-09-19 14:32:03,731 - src.llm_core - WARNING - LLM async call to http://127.0.0.1:11434/v1/chat/completions failed in 0.19s (attempt 1): HTTP 404 Ollama returned 404 — check the base URL and model name. (model 'nomic-embed-text:latest' not found)
+2026-09-19 14:32:03,734 - services.memory.memory_extractor - WARNING - LLM memory extraction failed; using fallback candidates if available: 404: Ollama returned 404 — check the base URL and model name. (model 'nomic-embed-text:latest' not found)
+2026-09-19 14:32:03,735 - services.memory.memory_extractor - INFO - Auto memory extraction ran: 0 candidates
+2026-09-19 14:32:23,517 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:32:23,518 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:32:25,074 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:32:25,075 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:32:27,595 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:32:29,169 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:32:42,747 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:32:42,750 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:32:42,829 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:32:45,712 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:32:45,713 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:32:46,827 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:32:49,775 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:33:00,530 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:33:00,530 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:33:04,570 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:33:19,091 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:33:19,091 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:33:19,142 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:33:19,323 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:33:57,531 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:33:57,533 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:33:59,104 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:33:59,105 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:34:01,611 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:34:03,145 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:34:10,324 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:34:10,326 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:34:10,409 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:34:13,252 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:34:13,253 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:34:14,372 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:34:17,323 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:34:22,523 - routes.chat_routes - INFO - [doc-inject] chat_mode=chat, active_doc_id=''
+2026-09-19 14:34:22,604 - src.chat_handler - INFO - Preset None: temp=1.0, max_tokens=0
+2026-09-19 14:34:22,659 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:34:22,682 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/slots "HTTP/1.1 404 Not Found"
+2026-09-19 14:34:22,731 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:34:22,732 - src.model_context - INFO - Context length for llama3.2:1b: 128000
+2026-09-19 14:34:22,737 - routes.chat_routes - INFO - [doc-inject] no active doc for session a3c91952-30ed-4b83-9b41-e1e00b497f46
+2026-09-19 14:34:23,068 - httpx - INFO - HTTP Request: POST http://127.0.0.1:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2026-09-19 14:34:26,965 - httpx - INFO - HTTP Request: POST http://127.0.0.1:11434/v1/chat/completions "HTTP/1.1 404 Not Found"
+2026-09-19 14:34:26,977 - src.llm_core - WARNING - LLM async call to http://127.0.0.1:11434/v1/chat/completions failed in 0.04s (attempt 1): HTTP 404 Ollama returned 404 — check the base URL and model name. (model 'nomic-embed-text:latest' not found)
+2026-09-19 14:34:26,980 - routes.chat_helpers - ERROR - Auto-name failed for a3c91952-30ed-4b83-9b41-e1e00b497f46: 404: Ollama returned 404 — check the base URL and model name. (model 'nomic-embed-text:latest' not found)
+Traceback (most recent call last):
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\routes\chat_helpers.py", line 158, in auto_name_session
+    title = await llm_call_async(
+  File "C:\Users\acer\Downloads\Misantropic\Misantropic\src\llm_core.py", line 712, in llm_call_async
+    raise HTTPException(r.status_code, friendly)
+fastapi.exceptions.HTTPException: 404: Ollama returned 404 — check the base URL and model name. (model 'nomic-embed-text:latest' not found)
+
+2026-09-19 14:34:34,007 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:34:34,008 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:34:34,070 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:34:34,238 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:34:59,105 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:34:59,106 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:35:03,185 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:35:10,267 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:35:10,269 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:35:12,839 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:35:12,839 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:35:12,947 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:35:14,342 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:35:15,847 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:35:15,849 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:35:16,893 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:35:19,898 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:35:20,839 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:35:20,841 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:35:20,897 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:35:23,827 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:35:23,827 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:35:24,907 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:35:27,906 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:35:40,071 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:35:40,073 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:35:40,112 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:35:40,274 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:35:59,076 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:35:59,079 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:36:03,140 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:36:08,463 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:36:08,465 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:36:08,592 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:36:11,430 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:36:11,430 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:36:12,537 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:36:15,500 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:36:24,211 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:36:24,211 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:36:28,295 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:36:50,889 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:36:50,890 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:36:51,004 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:36:53,873 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:36:53,874 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:36:54,968 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:36:57,328 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:36:57,334 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:36:57,393 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:36:57,948 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:37:01,288 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:37:01,288 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:37:01,370 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:37:01,398 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:37:04,038 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:37:04,039 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:37:04,151 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:37:04,265 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:37:04,369 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:37:04,370 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:37:05,343 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:37:08,440 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:37:51,060 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:37:51,061 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:37:55,171 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:38:01,287 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:38:01,289 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:38:05,383 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:38:41,684 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:38:41,690 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:38:41,883 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:38:44,655 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:38:44,656 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:38:45,735 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:38:48,735 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:38:51,057 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:38:51,059 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:38:55,135 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:38:55,184 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:38:55,189 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:38:55,307 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:38:58,146 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:38:58,149 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:38:59,244 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:39:02,226 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:39:04,032 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:39:04,032 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:39:04,159 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:39:04,269 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:39:50,879 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:39:50,879 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:39:54,955 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:39:55,158 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:39:55,159 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:39:59,234 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:40:51,070 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:40:51,071 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:40:55,126 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:40:55,171 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:40:55,173 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:40:59,258 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:41:29,071 - src.upload_handler - INFO - Rate-limit cleanup: removed 0 IPs, 0 timestamps.
+2026-09-19 14:41:55,165 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:41:55,165 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:41:59,078 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:41:59,083 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:41:59,249 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:42:03,144 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:42:55,162 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:42:55,163 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:42:59,068 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:42:59,069 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:42:59,202 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:43:03,149 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:43:39,448 - core.auth - INFO - Auth config loaded
+2026-09-19 14:43:39,452 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 14:43:39,453 - core.auth - INFO - Auth config loaded
+2026-09-19 14:43:39,454 - core.auth - INFO - Loaded 2 session(s) from disk
+2026-09-19 14:43:55,156 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:43:55,157 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:43:59,128 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:43:59,133 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:43:59,246 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:44:03,193 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:44:50,883 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:44:50,884 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:44:54,950 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:44:55,143 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:44:55,144 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:44:59,215 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:45:50,883 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:45:50,883 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:45:54,958 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:45:55,141 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:45:55,142 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:45:59,226 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:46:50,866 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:46:50,867 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:46:54,934 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:46:55,153 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:46:55,155 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:46:59,221 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:47:15,108 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:47:15,109 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:47:15,154 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:47:18,095 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:47:18,096 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:47:19,185 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:47:21,062 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:47:21,063 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:47:21,167 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:47:22,121 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:47:24,064 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:47:24,066 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:47:25,140 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:47:27,097 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:47:27,097 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:47:27,161 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:47:28,133 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:47:30,070 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:47:30,073 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:47:31,199 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:47:34,128 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:47:56,223 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:47:56,224 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:47:56,258 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:47:56,483 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:48:16,052 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:48:16,053 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:48:20,112 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:48:27,054 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:48:27,059 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:48:31,123 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:48:38,164 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:49:16,045 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:49:16,046 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:49:20,134 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:49:27,068 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:49:27,068 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:49:31,144 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:49:52,446 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:49:52,448 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:49:52,519 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:49:55,426 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:49:55,426 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:49:56,520 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:49:59,497 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:50:00,443 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:50:00,444 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:50:00,448 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:50:00,610 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:50:00,683 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:50:03,182 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:50:16,048 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:50:16,050 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:50:18,948 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 14:50:20,107 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:50:52,444 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:50:52,446 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:50:56,510 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:51:16,042 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:51:16,044 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:51:20,097 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:51:52,434 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:51:52,436 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:51:56,483 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:52:52,441 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:52:52,446 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:52:56,505 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:52:59,302 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:52:59,308 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:53:03,354 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:53:52,441 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:53:52,443 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:53:56,490 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:53:59,065 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:53:59,066 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:54:03,122 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 14:54:15,093 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:54:15,095 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 14:54:19,153 - routes.email_routes - ERROR - Failed to list emails: [WinError 10061] No connection could be made because the target machine actively refused it

@@ -67,7 +67,7 @@ function _bringToFront(modal) {
 
 function _emitModalOpened(id, modal) {
   try {
-    window.dispatchEvent(new CustomEvent('odysseus:modal-opened', {
+    window.dispatchEvent(new CustomEvent('misantropic:modal-opened', {
       detail: { id, modal },
     }));
   } catch (_) {}
@@ -155,7 +155,7 @@ let _dockPos = null; // { left, top } | null
 const _renderedChipIds = new Set();
 
 // ── Persistence (mobile dock + free-chip positions) ──
-const _DOCK_STORAGE_KEY = 'odysseus.mobileDockState.v1';
+const _DOCK_STORAGE_KEY = 'misantropic.mobileDockState.v1';
 let _dockStateLoaded = false;
 
 function _saveDockState() {

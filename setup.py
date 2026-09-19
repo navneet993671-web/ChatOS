@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Odysseus — first-time setup script.
+"""Misantropic — first-time setup script.
 
 Creates data directories, initializes the database, and sets up an
 initial admin user. Safe to re-run (skips what already exists).
@@ -54,8 +54,8 @@ def create_default_admin():
         import bcrypt
         import json
 
-        username = os.getenv("ODYSSEUS_ADMIN_USER", "admin").strip().lower() or "admin"
-        password = os.getenv("ODYSSEUS_ADMIN_PASSWORD") or __import__("secrets").token_urlsafe(18)
+        username = os.getenv("MISANTROPIC_ADMIN_USER", "admin").strip().lower() or "admin"
+        password = os.getenv("MISANTROPIC_ADMIN_PASSWORD") or __import__("secrets").token_urlsafe(18)
         hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
         auth_data = {
             "users": {
@@ -69,7 +69,7 @@ def create_default_admin():
             json.dump(auth_data, f, indent=2)
         print(f"  [ok] Initial admin user created ({username})")
         print(f"        Temporary password: {password}")
-        print(f"        ** Change it after first login. Set ODYSSEUS_ADMIN_PASSWORD to choose your own. **")
+        print(f"        ** Change it after first login. Set MISANTROPIC_ADMIN_PASSWORD to choose your own. **")
         return "created"
     except ImportError:
         print("  [warn] bcrypt not installed — skipping admin user creation")
@@ -122,7 +122,7 @@ def check_deps():
 
 
 def main():
-    print("\n=== Odysseus Setup ===\n")
+    print("\n=== Misantropic Setup ===\n")
 
     print("1. Creating directories...")
     create_dirs()
@@ -153,7 +153,7 @@ def main():
     print("\n=== Setup complete ===")
     # start-macos.sh launches the server itself (on its own port) right after
     # this, so suppress the manual hint there to avoid a contradictory URL.
-    if not os.getenv("ODYSSEUS_SKIP_RUN_HINT"):
+    if not os.getenv("MISANTROPIC_SKIP_RUN_HINT"):
         print(f"\nStart the server with:")
         print(f"  python -m uvicorn app:app --host 127.0.0.1 --port 7000")
         print(f"\nThen open http://localhost:7000")

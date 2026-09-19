@@ -1,4 +1,4 @@
-"""scripts/_lib/cli.py — shared scaffolding for the `odysseus-*` CLIs.
+"""scripts/_lib/cli.py — shared scaffolding for the `misantropic-*` CLIs.
 
 Each top-level CLI imports a few helpers from here so they don't
 have to redefine the same `_quiet_logs` / `_emit` / `_fail` /
@@ -17,7 +17,7 @@ parents-parser pattern. Usage:
         ...
 
     def build_parser():
-        p = common_parser("odysseus-foo", "Description.")
+        p = common_parser("misantropic-foo", "Description.")
         sub = p.add_subparsers(dest="cmd", required=True)
         pl = sub.add_parser("list", parents=[p._common_parents[0]])
         pl.set_defaults(func=cmd_list)
@@ -38,11 +38,16 @@ import os
 import sys
 from pathlib import Path
 
-# Make repo root importable. Tools are invoked as `scripts/odysseus-foo`
+# Make repo root importable. Tools are invoked as `scripts/misantropic-foo`
 # from any cwd; we want `from core.database import ...` to work.
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
+
+# Phase 0 rename: honour legacy ODYSSEUS_* names before app modules import.
+from core.env_compat import apply_legacy_env_aliases  # noqa: E402
+
+apply_legacy_env_aliases()
 
 
 def quiet_logs() -> None:
@@ -78,7 +83,7 @@ def fail(msg: str, code: int = 1) -> "None":
     sys.exit(code)
 
 
-VERSION = "0.1.0"  # bumped centrally; every odysseus-* CLI reports this
+VERSION = "0.1.0"  # bumped centrally; every misantropic-* CLI reports this
 
 
 def common_parser(prog: str, description: str = "") -> argparse.ArgumentParser:

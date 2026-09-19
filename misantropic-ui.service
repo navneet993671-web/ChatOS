@@ -1,0 +1,19 @@
+# Copy to /etc/systemd/system/misantropic-ui.service
+# Edit User, WorkingDirectory, and ExecStart paths to match your setup
+[Unit]
+Description=Misantropic UI
+After=network.target
+
+[Service]
+Type=simple
+# CHANGE THESE to match your user and install path:
+User=YOURUSER
+WorkingDirectory=/home/YOURUSER/misantropic-ui
+# Native backend port is 7001 (see README). Change if you front it with nginx.
+ExecStart=/home/YOURUSER/misantropic-ui/venv/bin/uvicorn app:app --port 7001 --host 0.0.0.0
+Restart=always
+RestartSec=3
+EnvironmentFile=-/home/YOURUSER/misantropic-ui/.env
+
+[Install]
+WantedBy=multi-user.target

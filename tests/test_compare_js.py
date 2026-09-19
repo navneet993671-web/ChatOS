@@ -168,7 +168,15 @@ def test_storage_keys_are_namespaced(node_available):
     """The compare module stores votes + an exclusion pool in
     localStorage. Pin that the keys start with `odysseus-` so they
     can't collide with other apps on the same origin or with a
-    different feature of this app."""
+    different feature of this app.
+
+    NOTE: the prefix is still the legacy `odysseus-` on purpose. Browser
+    localStorage is persisted user state, so renaming these keys without a
+    one-time copy-old-key-to-new-key shim would silently reset every user's
+    saved votes, pool and preferences. This assertion pins the CURRENT
+    contract; flip it to `misantropic-` in the same change that adds the
+    migration shim (see MISANTROPIC_AUDIT.md, deferred identifiers).
+    """
     script = textwrap.dedent("""
         const m = await import('./static/js/compare/icons.js');
         console.log(JSON.stringify({

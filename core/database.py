@@ -6,6 +6,11 @@ from sqlalchemy.types import TypeDecorator
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.orm import relationship, sessionmaker, backref
 
+# Phase 0 rename: honour legacy ODYSSEUS_* names before any config is read.
+from core.env_compat import apply_legacy_env_aliases
+
+apply_legacy_env_aliases()
+
 logger = logging.getLogger(__name__)
 
 # Create base class for declarative models
@@ -166,6 +171,81 @@ class ChatMessage(Base):
     __table_args__ = (
         Index('ix_messages_session_time', 'session_id', 'timestamp'),  # Composite for efficient message retrieval
     )
+
+class VoiceSession(TimestampMixin, Base):
+    """Bookkeeping row for one voice assistant session.
+
+    Deliberately thin. Voice does NOT own a second conversation store: the
+    transcript is written to the same ChatMessage rows, inside the same
+    Session row referenced by ``conversation_id``. This table only records
+    that a given conversation was driven by voice, by whom, in what mode, and
+    with which providers — so audio retention and audit questions can be
+    answered without touching the chat tables.
+
+    ``user_id`` holds the authenticated *username*, because that is this
+    repo's identity (auth lives in data/auth.json; there is no numeric user
+    table). It is always taken from the authenticated request and never from
+    the client body.
+    """
+    __tablename__ = "voice_sessions"
+
+    id = Column(String, primary_key=True, index=True)
+
+    # Owner. Always the authenticated username — never client-supplied.
+    user_id = Column(String, nullable=False, index=True)
+
+    # The existing chat session ("conversation") this voice session drives.
+    # SET NULL rather than CASCADE: deleting a chat must not silently destroy
+    # the record that voice audio may need to be purged for.
+    conversation_id = Column(
+        String,
+        ForeignKey("sessions.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
+    )
+
+    # idle | listening | speech_detected | processing | speaking
+    # | interrupted | error | ended
+    status = Column(String, nullable=False, default="idle")
+
+    language = Column(String, nullable=True)
+    voice = Column(String, nullable=True)
+    # Which engine served this session ("local", "browser", "endpoint:<id>").
+    provider = Column(String, nullable=True)
+    # "push_to_talk" | "conversation"
+    mode = Column(String, nullable=True)
+
+    started_at = Column(DateTime, nullable=True)
+    ended_at = Column(DateTime, nullable=True)
+
+    # Free-form extras (VAD stats, device info). "metadata" is reserved by
+    # SQLAlchemy declarative, so the attribute is meta_data.
+    meta_data = Column("metadata", Text, nullable=True)
+
+    __table_args__ = (
+        # Primary listing query: "my recent voice sessions".
+        Index('ix_voice_sessions_user_created', 'user_id', 'created_at'),
+        # Lookup by conversation ("was this chat driven by voice?").
+        Index('ix_voice_sessions_conversation', 'conversation_id', 'created_at'),
+    )
+
+    def to_dict(self):
+        def iso(value):
+            return value.isoformat() if value else None
+
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'conversation_id': self.conversation_id,
+            'status': self.status,
+            'language': self.language,
+            'voice': self.voice,
+            'provider': self.provider,
+            'mode': self.mode,
+            'started_at': iso(self.started_at),
+            'ended_at': iso(self.ended_at),
+            'created_at': iso(self.created_at),
+        }
 
 class Document(TimestampMixin, Base):
     """Living document that the AI can create and edit in-place."""
@@ -945,6 +1025,9 @@ def _migrate_add_owner_to_table(table_name: str, index_name: str):
 def _migrate_add_multiuser_owner_columns():
     """Add owner column to memories, gallery_images, user_tools, comparisons."""
     _migrate_add_owner_to_table("memories", "ix_memories_owner")
+    _migrate_add_owner_to_table("bots", "ix_bots_owner")
+    _migrate_add_owner_to_table("bot_runs", "ix_bot_runs_owner")
+    _migrate_add_owner_to_table("bot_approvals", "ix_bot_approvals_owner")
     _migrate_add_owner_to_table("gallery_images", "ix_gallery_images_owner")
     _migrate_add_owner_to_table("user_tools", "ix_user_tools_owner")
     _migrate_add_owner_to_table("comparisons", "ix_comparisons_owner")
@@ -1410,6 +1493,133 @@ class Integration(TimestampMixin, Base):
     type   = Column(String, nullable=False)  # "email", "rss", "webhook"
     config = Column(JSON, nullable=True)     # type-specific config
     enabled = Column(Boolean, default=True)
+
+
+class Bot(TimestampMixin, Base):
+    """A persistent AI worker that owns ScheduledTasks and runs them repeatedly.
+
+    A Bot is NOT an execution engine. It is the durable identity that carries
+    instructions, model choice, permissions and history across many runs. Every
+    actual execution goes through the existing ScheduledTask → TaskRun →
+    task_scheduler → stream_agent_loop pipeline, exactly like a user-created
+    task — so tools, MCP, permissions, model fallbacks and restart recovery all
+    behave identically for bot work and human work.
+
+    Triggers reuse ScheduledTask's own fields (schedule / cron_expression /
+    trigger_type / trigger_event / webhook_token). A Bot does not duplicate the
+    scheduler; the bot-run dispatcher asks "which bots are due?" and each due
+    bot gets its owned ScheduledTask executed by the one real scheduler.
+
+    Ownership note: `owner` is the username string, matching every other
+    owner-scoped table in this file (sessions, gallery_images, scheduled_tasks).
+    It is resolved from the authenticated session in routes, never from a body.
+    """
+    __tablename__ = "bots"
+
+    id             = Column(String, primary_key=True, index=True)
+    owner          = Column(String, nullable=True, index=True)
+    name           = Column(String, nullable=False)
+    description    = Column(Text, nullable=True)
+    avatar         = Column(String, nullable=True)          # emoji or single glyph
+    status         = Column(String, default="draft", index=True)  # lifecycle, see services/bots/lifecycle.py
+
+    model          = Column(String, nullable=True)          # requested model (resolved at execution)
+    endpoint_url   = Column(String, nullable=True)          # resolved like ScheduledTask's
+    system_prompt  = Column(Text, nullable=True)
+    instructions   = Column(Text, nullable=True)            # standing instructions, injected into prompt
+
+    autonomy_level = Column(Integer, nullable=False, default=1)  # 0=observe..3=autonomous
+    capabilities   = Column(Text, nullable=True, default="[]")   # JSON array of capability keys
+    triggers       = Column(Text, nullable=True, default="[]")   # JSON array of trigger specs
+    approval_policy = Column(Text, nullable=True, default="{}")   # JSON {"mode": "per_run"|"pattern"...}
+    memory_enabled = Column(Boolean, default=True)          # read/write user memory
+    memory_scope   = Column(String, default="bot")          # "bot" | "user"
+    notify_on      = Column(Text, nullable=True, default='["completed","failed","approval"]')
+    max_concurrent_runs = Column(Integer, default=1)        # conservative default
+    max_retries    = Column(Integer, default=0)             # retry attempts after a failed run
+    timeout_seconds = Column(Integer, nullable=True)        # per-run wall clock cap
+
+    workspace_dir  = Column(String, nullable=True)          # relative to data/, never absolute
+
+    # Aggregate stats are derived from BotRun rows; denormalised here so the
+    # card list needs one query. Recomputed on each run completion.
+    last_run_at    = Column(DateTime, nullable=True, index=True)
+    last_success_at = Column(DateTime, nullable=True)
+    last_error     = Column(Text, nullable=True)
+    total_runs     = Column(Integer, default=0)
+    successful_runs = Column(Integer, default=0)
+    failed_runs    = Column(Integer, default=0)
+    consecutive_failures = Column(Integer, default=0)
+
+    __table_args__ = (
+        Index('ix_bots_owner_status', 'owner', 'status'),
+    )
+
+
+class BotRun(TimestampMixin, Base):
+    """One execution of a Bot — always linked to the ScheduledTask run that did
+    the work (mission_id → scheduled_tasks.id; the TaskRun row holds the real
+    output). Status vocabulary mirrors TaskRun's plus the bot-specific
+    waiting_approval / queued states."""
+    __tablename__ = "bot_runs"
+
+    id           = Column(String, primary_key=True, index=True)
+    bot_id       = Column(String, ForeignKey("bots.id", ondelete="CASCADE"), nullable=False, index=True)
+    owner        = Column(String, nullable=True, index=True)
+    mission_id   = Column(String, ForeignKey("scheduled_tasks.id", ondelete="SET NULL"), nullable=True)
+    task_run_id  = Column(String, ForeignKey("task_runs.id", ondelete="SET NULL"), nullable=True)
+
+    trigger_type = Column(String, default="manual")       # manual|schedule|event|webhook|...
+    status       = Column(String, default="queued", index=True)  # queued|running|waiting_approval|completed|failed|cancelled|skipped
+    attempt      = Column(Integer, default=1)
+
+    started_at   = Column(DateTime, nullable=True)
+    completed_at = Column(DateTime, nullable=True)
+    duration_ms  = Column(Integer, nullable=True)
+
+    summary      = Column(Text, nullable=True)            # what the bot did
+    result       = Column(Text, nullable=True)            # final output text
+    error        = Column(Text, nullable=True)
+    artifacts    = Column(Text, nullable=True, default="[]")   # JSON array of {name, type, url}
+
+    model_used   = Column(String, nullable=True)
+    tokens_used  = Column(Integer, nullable=True)
+
+    __table_args__ = (
+        Index('ix_bot_runs_bot_started', 'bot_id', 'started_at'),
+        Index('ix_bot_runs_owner_status', 'owner', 'status'),
+    )
+
+
+class BotApproval(TimestampMixin, Base):
+    """A pending approval request raised by a Bot run.
+
+    Created when a run's plan includes an action the bot's approval policy marks
+    as requiring sign-off (email send, shell, file write outside the workspace,
+    external MCP side effects). The run parks in `waiting_approval` until the
+    owner approves or denies. "Approve and allow pattern" writes a narrowly
+    scoped entry into the bot's approval_policy, never an unrestricted grant.
+    """
+    __tablename__ = "bot_approvals"
+
+    id           = Column(String, primary_key=True, index=True)
+    bot_id       = Column(String, ForeignKey("bots.id", ondelete="CASCADE"), nullable=False, index=True)
+    owner        = Column(String, nullable=True, index=True)
+    run_id       = Column(String, ForeignKey("bot_runs.id", ondelete="CASCADE"), nullable=True, index=True)
+
+    action       = Column(String, nullable=False)          # "email.send"|"shell.exec"|"file.write"|"mcp.call"|...
+    description  = Column(Text, nullable=True)             # human-readable: "Send email to x@y — subject z"
+    risk_level   = Column(String, default="medium")        # low|medium|high
+    context      = Column(Text, nullable=True, default="{}")    # JSON payload of the request
+
+    status       = Column(String, default="pending", index=True)  # pending|approved|denied|expired
+    decided_at   = Column(DateTime, nullable=True)
+    decided_by   = Column(String, nullable=True)
+    pattern      = Column(Boolean, default=False)          # True when "approve and allow pattern" was chosen
+
+    __table_args__ = (
+        Index('ix_bot_approvals_bot_status', 'bot_id', 'status'),
+    )
 
 
 

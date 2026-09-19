@@ -1,4 +1,4 @@
-// static/sw.js — Odysseus PWA Service Worker
+// static/sw.js — Misantropic PWA Service Worker
 // Strategy:
 //   - HTML (navigation): stale-while-revalidate. Instant open from cache,
 //     background refresh so the next open has latest HTML.
@@ -7,7 +7,7 @@
 //   - Other static assets (images/fonts/libs): cache-first with bg refresh.
 //   - API / non-GET: never cached.
 // Bump CACHE_NAME whenever the precache list or SW logic changes.
-const CACHE_NAME = 'odysseus-v326';
+const CACHE_NAME = 'odysseus-v329';
 
 // Core shell precached on install so repeat opens are instant without any
 // network wait. Keep this list in sync with the <script type="module"> tags
@@ -26,6 +26,19 @@ const PRECACHE = [
   '/static/js/tourHints.js',
   '/static/js/fileHandler.js',
   '/static/js/voiceRecorder.js',
+  '/static/js/voice/index.js',
+  '/static/js/voice/voiceTypes.js',
+  '/static/js/voice/audioCapture.js',
+  '/static/js/voice/audioPlayback.js',
+  '/static/js/voice/voiceClient.js',
+  '/static/js/voice/chatBridge.js',
+  '/static/js/voice/browserStt.js',
+  '/static/js/voice/voiceAssistant.js',
+  '/static/js/voice/voiceUI.js',
+  '/static/js/video/index.js',
+  '/static/js/video/ops.js',
+  '/static/js/video/browserEncoder.js',
+  '/static/js/video/videoEditor.js',
   '/static/js/models.js',
   '/static/js/rag.js',
   '/static/js/presets.js',

@@ -256,7 +256,7 @@ function _initModelPickerDropdown() {
 
     // Broadcast immediately so listeners (e.g. the tour) can advance without
     // waiting for the async session-create/PATCH that follows.
-    try { document.dispatchEvent(new CustomEvent('odysseus:model-picked', { detail: m })); } catch {}
+    try { document.dispatchEvent(new CustomEvent('misantropic:model-picked', { detail: m })); } catch {}
 
     // Blur search input before closing to dismiss keyboard on mobile
     if (document.activeElement) document.activeElement.blur();
@@ -302,7 +302,7 @@ function _initModelPickerDropdown() {
     uiModule.showToast(`Using ${m.display}`);
   }
 
-  document.addEventListener('odysseus:auto-select-model', async (e) => {
+  document.addEventListener('misantropic:auto-select-model', async (e) => {
     const detail = (e && e.detail) || {};
     const currentSessionId = _deps.getCurrentSessionId();
     const sessions = _deps.getSessions();

@@ -6,6 +6,7 @@ import uiModule from './ui.js';
 import { openEditor, closeEditor, isEditorOpen } from './galleryEditor.js';
 import spinnerModule from './spinner.js';
 import { makeWindowDraggable } from './windowDrag.js';
+import { openVideoEditor, closeVideoEditor } from './video/index.js';
 
 const API_BASE = window.location.origin;
 let _open = false;
@@ -1341,13 +1342,19 @@ function _openDetail(img) {
     }
   }
 
+  // Videos get the video editor, not the image editor — and not the image
+  // rotate buttons, which call a PIL endpoint that cannot read a video.
+  const isVideo = _isVideoUrl(img.url);
+
   detail.innerHTML = `
     <div class="gallery-detail-header">
       <button class="gallery-detail-back" id="gallery-detail-back">&larr; Back</button>
       <div style="flex:1"></div>
-      <button class="gallery-detail-back" id="gallery-edit-direct-btn" title="Edit (E)" aria-label="Edit photo" style="display:inline-flex;align-items:center;gap:4px;">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
-        Edit
+      <button class="gallery-detail-back" id="gallery-edit-direct-btn" title="${isVideo ? 'Edit video (E)' : 'Edit (E)'}" aria-label="${isVideo ? 'Edit video' : 'Edit photo'}" style="display:inline-flex;align-items:center;gap:4px;">
+        ${isVideo
+          ? `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>`
+          : `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>`}
+        ${isVideo ? 'Edit video' : 'Edit'}
       </button>
       <button class="gallery-detail-back gallery-detail-fav-header${img.favorite ? ' active' : ''}" id="gallery-detail-fav-header" title="${img.favorite ? 'Unfavorite' : 'Favorite'}" aria-label="Favorite" aria-pressed="${img.favorite ? 'true' : 'false'}" style="display:inline-flex;align-items:center;justify-content:center;padding:4px 8px;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="${img.favorite ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -1382,12 +1389,12 @@ function _openDetail(img) {
     </div>
     <div class="gallery-detail-body">
       <div class="gallery-detail-image" id="gallery-detail-image-wrap" style="position:relative">
-        <button class="gallery-detail-rotate gallery-detail-rotate-ccw" id="gallery-rotate-ccw-btn" title="Rotate 90° counter-clockwise" aria-label="Rotate left">
+        ${isVideo ? '' : `<button class="gallery-detail-rotate gallery-detail-rotate-ccw" id="gallery-rotate-ccw-btn" title="Rotate 90° counter-clockwise" aria-label="Rotate left">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
         </button>
         <button class="gallery-detail-rotate gallery-detail-rotate-cw" id="gallery-rotate-btn" title="Rotate 90° clockwise" aria-label="Rotate right">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-        </button>
+        </button>`}
         <button class="gallery-detail-nav gallery-detail-nav-prev" id="gallery-detail-prev" title="Previous (←)" aria-label="Previous">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
@@ -1653,29 +1660,46 @@ function _openDetail(img) {
   }
 
   const _openInEditor = () => {
-    try {
-      detail.style.display = 'none';
-      const modal = document.getElementById('gallery-modal');
-      if (modal) {
-        modal.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
-        modal.querySelector('.gallery-tab[data-tab="editor"]')?.classList.add('active');
-      }
-      const imagesContainer = document.getElementById('gallery-images-container');
-      const albumsContainer = document.getElementById('gallery-albums-container');
-      if (imagesContainer) imagesContainer.style.display = 'none';
-      if (albumsContainer) albumsContainer.style.display = 'none';
-      const editorContainer = document.getElementById('gallery-editor-container');
-      if (editorContainer) editorContainer.style.display = 'flex';
-      const baseFilename = (img.filename || '').replace(/\.[^.]+$/, '');
-      const label = img.prompt?.trim() || baseFilename || 'Photo';
-      openEditor(img.url, img.id, null, label);
-    } catch (e) {
-      console.error('[edit] failed:', e);
-      if (uiModule) uiModule.showError('Failed to open editor: ' + (e?.message || 'unknown'));
+    detail.style.display = 'none';
+    const baseFilename = (img.filename || '').replace(/\.[^.]+$/, '');
+    const label = img.prompt?.trim() || baseFilename || 'Photo';
+    if (!openInEditorTab(img.url, img.id, label) && uiModule) {
+      uiModule.showError('Failed to open editor');
     }
   };
-  document.getElementById('gallery-edit-btn')?.addEventListener('click', _openInEditor);
-  document.getElementById('gallery-edit-direct-btn')?.addEventListener('click', _openInEditor);
+
+  // Videos open the video editor instead. It is its own window (so it can be
+  // dragged, resized and closed like the image editor), and its "Extract frame"
+  // action hands a still back to the image editor through the same tab switch.
+  const _openVideoEditor = () => {
+    detail.style.display = 'none';
+    const baseFilename = (img.filename || '').replace(/\.[^.]+$/, '');
+    const label = img.prompt?.trim() || baseFilename || 'Video';
+    try {
+      openVideoEditor({
+        id: img.id,
+        url: img.url,
+        name: img.prompt || baseFilename || '',
+        onSaved: (result) => {
+          _fetchLibrary(false);
+          if (uiModule && result?.replaced) {
+            uiModule.showToast?.(label + ' was replaced');
+          }
+        },
+        onFrame: (frame) => {
+          closeVideoEditor();
+          openInEditorTab(frame.url, frame.id, 'Extracted frame');
+        },
+      });
+    } catch (e) {
+      console.error('[video edit] failed:', e);
+      if (uiModule) uiModule.showError('Failed to open the video editor: ' + (e?.message || 'unknown'));
+    }
+  };
+
+  const _editHandler = isVideo ? _openVideoEditor : _openInEditor;
+  document.getElementById('gallery-edit-btn')?.addEventListener('click', _editHandler);
+  document.getElementById('gallery-edit-direct-btn')?.addEventListener('click', _editHandler);
 
   // Rotate — server-side image rotation. Forces a fresh URL afterwards
   // so the browser doesn't show the old cached version. Shows a
@@ -1881,6 +1905,39 @@ function _makeGalleryDraggable(content) {
 
 // Re-export the manager for the rail click handler
 import * as Modals from './modalManager.js';
+
+/**
+ * Switch the gallery's editor tab to the front and load an image into it.
+ *
+ * Exported because the video editor needs it: an extracted frame is an
+ * ordinary gallery image, and editing it should land in the same place as
+ * editing any other photo.
+ */
+export function openInEditorTab(imageUrl, imageId, displayName) {
+  try {
+    const modal = document.getElementById('gallery-modal');
+    if (modal) {
+      modal.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
+      modal.querySelector('.gallery-tab[data-tab="editor"]')?.classList.add('active');
+    }
+    const imagesContainer = document.getElementById('gallery-images-container');
+    const albumsContainer = document.getElementById('gallery-albums-container');
+    if (imagesContainer) imagesContainer.style.display = 'none';
+    if (albumsContainer) albumsContainer.style.display = 'none';
+    const editorContainer = document.getElementById('gallery-editor-container');
+    if (editorContainer) editorContainer.style.display = 'flex';
+    openEditor(imageUrl, imageId, null, displayName || 'Photo');
+    return true;
+  } catch (e) {
+    console.error('[edit] failed:', e);
+    return false;
+  }
+}
+
+/** Re-fetch the library, so a new or replaced item appears immediately. */
+export function refreshGallery() {
+  return _fetchLibrary(false);
+}
 
 export function openGallery() {
   // If already minimized — restore in place, preserve all state
@@ -2515,7 +2572,7 @@ export function openGallery() {
   const _bulkActionsBtn = document.getElementById('gallery-bulk-actions');
   function _showGalleryBulkMenu(anchor) {
     document.querySelectorAll('.gallery-bulk-menu').forEach(d => d.remove());
-    // Standard Odysseus dropdown (.dropdown + dropdown-item-compact) so it
+    // Standard Misantropic dropdown (.dropdown + dropdown-item-compact) so it
     // matches every other menu in the app. Positioned fixed at the button.
     const dropdown = document.createElement('div');
     dropdown.className = 'dropdown gallery-bulk-menu';
@@ -2830,6 +2887,8 @@ const galleryModule = {
   openGallery,
   closeGallery,
   isGalleryOpen,
+  refreshGallery,
+  openInEditorTab,
 };
 
 export default galleryModule;

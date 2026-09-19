@@ -17,6 +17,13 @@ from dotenv import load_dotenv
 # is silently ignored and the user is unexpectedly forced to log in (issue #142).
 # utf-8-sig reads plain UTF-8 (no BOM) identically, so this is safe everywhere.
 load_dotenv(encoding="utf-8-sig")
+
+# Phase 0 rename: ODYSSEUS_* -> MISANTROPIC_*. Runs right after the process
+# environment and .env are loaded so an existing install carrying legacy
+# ODYSSEUS_* keys keeps working. See core/env_compat.py.
+from core.env_compat import apply_legacy_env_aliases  # noqa: E402
+
+apply_legacy_env_aliases()
 import uuid
 
 import asyncio
@@ -202,7 +209,7 @@ if AUTH_ENABLED:
         forwarding headers. A bare ``client.host in ('127.0.0.1','::1')`` check is
         unsafe behind a Cloudflare tunnel / reverse proxy: those connect from
         loopback, so a remote visitor would otherwise inherit local trust and
-        slip past LOCALHOST_BYPASS or spoof the internal-tool path. Odysseus's own
+        slip past LOCALHOST_BYPASS or spoof the internal-tool path. Misantropic's own
         in-process agent loopback calls carry none of these headers, so they still
         qualify."""
         host = request.client.host if request.client else None
@@ -561,6 +568,19 @@ from routes.stt_routes import setup_stt_routes
 app.include_router(setup_stt_routes(stt_service))
 logger.info("STT service initialized (provider managed via settings)")
 
+# Voice assistant — an interface layer over the chat/agent stack, not a second
+# engine. Reuses the STT/TTS services above; adds session bookkeeping only.
+from services.voice import get_voice_service
+voice_service = get_voice_service()
+from routes.voice import setup_voice_routes
+app.include_router(setup_voice_routes(voice_service))
+logger.info(
+    "Voice service initialized (enabled=%s, stt=%s, tts=%s)",
+    voice_service.config.enabled,
+    voice_service.config.stt_provider,
+    voice_service.config.tts_provider,
+)
+
 # Documents (artifacts/canvas)
 from routes.document_routes import setup_document_routes
 app.include_router(setup_document_routes(session_manager, upload_handler))
@@ -576,6 +596,27 @@ app.include_router(setup_gallery_routes())
 # Persisted image-editor drafts (server-backed projects)
 from routes.editor_draft_routes import setup_editor_draft_routes
 app.include_router(setup_editor_draft_routes())
+
+# Video editing. Server-side encoding is a *capability*, not an assumption:
+# when ffmpeg is absent the routes report that and the browser encodes instead,
+# so the gallery keeps working on a machine without it.
+from services.video import get_video_service
+from routes.video_routes import setup_video_routes
+video_service = get_video_service()
+app.include_router(setup_video_routes(video_service))
+_video_caps = video_service.capabilities()
+logger.info(
+    "Video editing initialized (server_editing=%s, ffmpeg=%s)",
+    _video_caps["server_editing"],
+    _video_caps["version"] or "not installed",
+)
+
+# Persistent Bots — orchestration layer over the existing ScheduledTask/
+# task_scheduler/agent_loop stack. No second execution engine: a bot run IS a
+# scheduled-task run, created and owned by the bot.
+from routes.bots_routes import setup_bots_routes
+app.include_router(setup_bots_routes())
+logger.info("Bots initialized (%d templates)", len(__import__('services.bots.templates', fromlist=['BOT_TEMPLATES']).BOT_TEMPLATES))
 
 # Scheduled tasks + event bus
 from src.task_scheduler import TaskScheduler
@@ -928,13 +969,13 @@ async def startup_event():
 
     # Start scheduled task runner — skip when running under a cron-driven
     # deployment where an external worker drives task firing. Mirrors
-    # `ODYSSEUS_INPROCESS_POLLERS` from the email pollers.
-    _tasks_inprocess = os.environ.get("ODYSSEUS_INPROCESS_TASKS", "1").strip().lower()
+    # `MISANTROPIC_INPROCESS_POLLERS` from the email pollers.
+    _tasks_inprocess = os.environ.get("MISANTROPIC_INPROCESS_TASKS", "1").strip().lower()
     if _tasks_inprocess not in ("0", "false", "no", "off", ""):
         await task_scheduler.start()
     else:
         logger.info(
-            "In-process task scheduler disabled (ODYSSEUS_INPROCESS_TASKS=0); "
+            "In-process task scheduler disabled (MISANTROPIC_INPROCESS_TASKS=0); "
             "drive task firing externally (e.g. cron)."
         )
     # Periodic null-owner sweep — re-runs the legacy-owner assignment hourly

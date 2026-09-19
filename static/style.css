@@ -34456,3 +34456,647 @@ body.theme-frosted .modal {
   background-color: color-mix(in srgb, var(--accent, var(--red)) 10%, transparent);
   transform: translateX(1px);
 }
+
+/* ============================================ */
+/* Voice Assistant (push-to-talk)               */
+/*
+ * Sizing mirrors .send-btn so the mic reads as part of the composer row.
+ * State is always carried by text in the overlay as well as by colour — the
+ * button alone never has to communicate "recording" through hue.
+ */
+
+.voice-btn {
+  background: color-mix(in srgb, var(--panel, #111) 70%, var(--border, #355a66));
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  min-width: 32px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.15s;
+}
+
+.voice-btn:hover:not([hidden]) {
+  background: color-mix(in srgb, var(--accent, #0af) 22%, var(--panel, #111));
+  border-color: color-mix(in srgb, var(--accent, #0af) 55%, var(--border));
+}
+
+.voice-btn:focus-visible {
+  outline: 2px solid var(--accent, #0af);
+  outline-offset: 2px;
+}
+
+.voice-btn[aria-pressed="true"],
+.voice-btn.recording {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+  animation: voice-btn-pulse 1.4s ease-in-out infinite;
+}
+
+.voice-btn.speaking {
+  background: color-mix(in srgb, var(--accent, #0af) 35%, var(--panel, #111));
+  border-color: color-mix(in srgb, var(--accent, #0af) 70%, var(--border));
+}
+
+@keyframes voice-btn-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--red) 55%, transparent); }
+  50%      { box-shadow: 0 0 0 6px color-mix(in srgb, var(--red) 0%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice-btn[aria-pressed="true"],
+  .voice-btn.recording { animation: none; }
+}
+
+.voice-overlay {
+  position: fixed;
+  left: 50%;
+  bottom: 104px;
+  transform: translateX(-50%);
+  z-index: 900;
+  width: min(460px, calc(100vw - 32px));
+  background: var(--panel, #111);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+  padding: 14px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.voice-overlay.hidden { display: none; }
+
+.voice-overlay-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.voice-overlay-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+}
+
+.voice-status {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.voice-status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.voice-status-dot[data-state="listening"],
+.voice-status-dot[data-state="speech_detected"] { background: var(--red); }
+.voice-status-dot[data-state="speaking"] { background: var(--accent, #0af); }
+.voice-status-dot[data-state="processing"] { background: var(--color-warning, #e5c07b); }
+.voice-status-dot[data-state="error"] { background: var(--color-error, var(--red)); }
+.voice-status-dot[data-state="interrupted"] { background: var(--color-muted, #6b7280); }
+
+.voice-wave {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 44px;
+}
+
+.voice-wave-bar {
+  width: 3px;
+  min-height: 3px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent, #0af) 65%, var(--fg));
+  transition: height 0.09s linear;
+}
+
+.voice-notice {
+  font-size: 12px;
+  line-height: 1.45;
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border-left: 3px solid var(--border);
+  background: color-mix(in srgb, var(--border) 22%, transparent);
+}
+
+.voice-notice.hidden { display: none; }
+.voice-notice[data-kind="warning"] { border-left-color: var(--color-warning, #e5c07b); }
+.voice-notice[data-kind="error"] { border-left-color: var(--color-error, var(--red)); }
+
+.voice-transcript {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 30vh;
+  overflow-y: auto;
+}
+
+.voice-turn { display: flex; flex-direction: column; gap: 2px; }
+
+.voice-role {
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--color-muted, #6b7280);
+}
+
+.voice-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.voice-turn-user .voice-text { font-weight: 500; }
+
+.voice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.voice-action {
+  background: color-mix(in srgb, var(--panel, #111) 60%, var(--border));
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.voice-action:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent, #0af) 18%, var(--panel, #111));
+}
+
+.voice-action.primary {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+.voice-action:disabled { opacity: 0.5; cursor: default; }
+
+.voice-action:focus-visible {
+  outline: 2px solid var(--accent, #0af);
+  outline-offset: 2px;
+}
+
+
+/*
+ * 7. Voice button sizing across breakpoints.
+ *
+ * The composer's submit button is 32px on desktop but jumps to 48px at
+ * max-width:768px for touch. The mic button was left at 32px, so on mobile it
+ * sat visibly undersized next to Send and gave a 32px tap target where the
+ * rest of the row offers 48px. Match it, including the mobile radius, so the
+ * right-hand cluster (mode toggle / mic / send) shares one control size.
+ */
+@media (max-width: 768px) {
+  .voice-btn {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 12px;
+  }
+}
+
+
+/* ==========================================================================
+ * VIDEO EDITOR
+ *
+ * The gallery's video editing surface: a timeline with in/out handles, a stage
+ * that previews the edit with CSS transforms, and an export footer with real
+ * progress.
+ *
+ * Every value here comes from the existing :root tokens. Note that `--accent`
+ * is genuinely undefined in this stylesheet, so the few places it is referenced
+ * carry the same `#0af` fallback the voice block uses rather than silently
+ * resolving to nothing.
+ * ========================================================================== */
+
+.video-editor-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 4200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.62);
+}
+
+.video-editor-modal[hidden] { display: none; }
+.video-editor-modal.open { display: flex; }
+
+.video-editor-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(1080px, 100%);
+  max-height: min(92vh, 900px);
+  background: var(--panel, #111);
+  color: var(--fg, #9cdef2);
+  border: 1px solid var(--border, #355a66);
+  border-radius: 12px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+.video-editor-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border, #355a66);
+  flex-shrink: 0;
+}
+
+.video-editor-heading { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.video-editor-icon { flex-shrink: 0; opacity: 0.8; }
+
+.video-editor-title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.video-editor-head-right { display: flex; align-items: center; gap: 8px; }
+
+/* Which engine will run the export — server ffmpeg or the browser. */
+.video-editor-engine {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border, #355a66);
+  opacity: 0.85;
+  white-space: nowrap;
+}
+
+.video-editor-engine[data-engine="server"] {
+  border-color: var(--green, #50fa7b);
+  color: var(--green, #50fa7b);
+}
+
+.video-editor-engine[data-engine="browser"] {
+  border-color: var(--warn, #f0ad4e);
+  color: var(--warn, #f0ad4e);
+}
+
+.video-editor-engine[data-engine="none"] {
+  border-color: var(--red, #e06c75);
+  color: var(--red, #e06c75);
+}
+
+.video-editor-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  color: inherit;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.video-editor-close:hover { border-color: var(--border, #355a66); }
+.video-editor-close:focus-visible,
+.video-editor-btn:focus-visible,
+.video-editor-mini:focus-visible,
+.video-editor-action:focus-visible,
+.video-editor-speed-btn:focus-visible {
+  outline: 2px solid var(--accent, #0af);
+  outline-offset: 2px;
+}
+
+.video-editor-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 14px;
+  padding: 14px;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.video-editor-main { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+
+/* ---- Stage & crop overlay ---- */
+
+.video-editor-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  background: #000;
+  border: 1px solid var(--border, #355a66);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.video-editor-stage video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: center center;
+}
+
+.video-editor-crop-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.video-editor-crop-layer.interactive { pointer-events: auto; }
+
+/* The huge box-shadow is what dims everything outside the crop rectangle —
+   cheaper and smoother than a four-element mask. */
+.video-editor-crop-box {
+  position: absolute;
+  border: 1px solid var(--red, #e06c75);
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
+  cursor: grab;
+  touch-action: none;
+}
+
+.video-editor-crop-layer:not(.interactive) .video-editor-crop-box {
+  cursor: default;
+  border-style: dashed;
+}
+
+.video-editor-crop-handle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--red, #e06c75);
+  border: 1px solid var(--panel, #111);
+  border-radius: 2px;
+  touch-action: none;
+}
+
+.video-editor-crop-layer:not(.interactive) .video-editor-crop-handle { display: none; }
+
+.video-editor-crop-handle[data-edge="nw"] { left: -6px; top: -6px; cursor: nwse-resize; }
+.video-editor-crop-handle[data-edge="ne"] { right: -6px; top: -6px; cursor: nesw-resize; }
+.video-editor-crop-handle[data-edge="sw"] { left: -6px; bottom: -6px; cursor: nesw-resize; }
+.video-editor-crop-handle[data-edge="se"] { right: -6px; bottom: -6px; cursor: nwse-resize; }
+
+/* ---- Timeline ---- */
+
+.video-editor-timeline { display: flex; flex-direction: column; gap: 8px; }
+
+.video-editor-track {
+  position: relative;
+  height: 22px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border, #355a66);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.video-editor-kept {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: color-mix(in srgb, var(--red, #e06c75) 32%, transparent);
+  border-left: 1px solid var(--red, #e06c75);
+  border-right: 1px solid var(--red, #e06c75);
+}
+
+.video-editor-playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--fg, #9cdef2);
+  pointer-events: none;
+}
+
+.video-editor-tl-row { display: flex; gap: 12px; }
+.video-editor-tl-field { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; }
+.video-editor-tl-label { font-size: 0.72rem; opacity: 0.75; width: 22px; flex-shrink: 0; }
+.video-editor-tl-field input[type="range"] { flex: 1; min-width: 0; accent-color: var(--red, #e06c75); }
+.video-editor-tl-readout { font-size: 0.72rem; font-variant-numeric: tabular-nums; width: 46px; text-align: right; flex-shrink: 0; }
+
+.video-editor-tl-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.video-editor-tl-total { font-size: 0.72rem; opacity: 0.6; margin-left: auto; }
+
+.video-editor-mini {
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  background: transparent;
+  color: inherit;
+  border: 1px solid var(--border, #355a66);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.video-editor-mini:hover { border-color: var(--red, #e06c75); }
+
+/* ---- Side controls ---- */
+
+.video-editor-side { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+
+.video-editor-group {
+  border: 1px solid var(--border, #355a66);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.video-editor-group-title {
+  margin: 0;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+  font-weight: 600;
+}
+
+.video-editor-btn-row { display: flex; gap: 6px; }
+
+.video-editor-btn {
+  flex: 1;
+  font-size: 0.74rem;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  border: 1px solid var(--border, #355a66);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.video-editor-btn:hover { border-color: var(--red, #e06c75); }
+
+/* `aria-pressed` is the state, so the styling follows it rather than a
+   parallel class — one source of truth for on/off. */
+.video-editor-btn[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--red, #e06c75) 26%, transparent);
+  border-color: var(--red, #e06c75);
+}
+
+.video-editor-check { display: flex; align-items: center; gap: 6px; font-size: 0.76rem; cursor: pointer; }
+.video-editor-check input { accent-color: var(--red, #e06c75); }
+
+.video-editor-slider { display: flex; flex-direction: column; gap: 2px; font-size: 0.74rem; }
+.video-editor-slider input[type="range"] { accent-color: var(--red, #e06c75); }
+
+.video-editor-speed { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.video-editor-speed-btn {
+  flex: 1 1 auto;
+  min-width: 44px;
+  font-size: 0.72rem;
+  padding: 4px 6px;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  border: 1px solid var(--border, #355a66);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.video-editor-speed-btn[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--red, #e06c75) 26%, transparent);
+  border-color: var(--red, #e06c75);
+}
+
+.video-editor-field { display: flex; flex-direction: column; gap: 3px; font-size: 0.74rem; }
+
+.video-editor-field select,
+.video-editor-field input[type="text"] {
+  width: 100%;
+  font-size: 0.76rem;
+  padding: 4px 6px;
+  background: rgba(0, 0, 0, 0.35);
+  color: inherit;
+  border: 1px solid var(--border, #355a66);
+  border-radius: 6px;
+}
+
+.video-editor-gif { display: flex; flex-direction: column; gap: 8px; }
+
+.video-editor-note { margin: 0; font-size: 0.7rem; opacity: 0.65; min-height: 0.8em; }
+
+.video-editor-summary { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
+
+.video-editor-summary li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.72rem;
+}
+
+.video-editor-summary-label { opacity: 0.65; }
+.video-editor-summary-empty { opacity: 0.55; font-style: italic; }
+
+/* ---- Progress & footer ---- */
+
+.video-editor-progress {
+  padding: 0 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.video-editor-progress[hidden] { display: none; }
+
+.video-editor-bar {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.video-editor-bar-fill {
+  height: 100%;
+  width: 0;
+  background: var(--red, #e06c75);
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.video-editor-progress-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  opacity: 0.85;
+}
+
+.video-editor-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--border, #355a66);
+  flex-shrink: 0;
+}
+
+.video-editor-status { font-size: 0.74rem; min-width: 0; flex: 1; }
+.video-editor-status[data-kind="ok"] { color: var(--green, #50fa7b); }
+.video-editor-status[data-kind="warn"] { color: var(--warn, #f0ad4e); }
+.video-editor-status[data-kind="error"] { color: var(--red, #e06c75); }
+
+.video-editor-foot-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+.video-editor-action {
+  font-size: 0.76rem;
+  padding: 6px 12px;
+  background: transparent;
+  color: inherit;
+  border: 1px solid var(--border, #355a66);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.video-editor-action:hover:not(:disabled) { border-color: var(--red, #e06c75); }
+.video-editor-action:disabled { opacity: 0.45; cursor: default; }
+
+.video-editor-action.primary {
+  background: color-mix(in srgb, var(--red, #e06c75) 26%, transparent);
+  border-color: var(--red, #e06c75);
+  font-weight: 600;
+}
+
+/* ---- Narrow layouts ---- */
+
+@media (max-width: 860px) {
+  .video-editor-body { grid-template-columns: minmax(0, 1fr); }
+  .video-editor-side { max-height: none; }
+  .video-editor-tl-row { flex-direction: column; gap: 6px; }
+  .video-editor-foot { flex-direction: column; align-items: stretch; }
+  .video-editor-foot-actions { justify-content: flex-end; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video-editor-bar-fill { transition: none; }
+}

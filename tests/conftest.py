@@ -32,3 +32,34 @@ if "src.database" not in sys.modules:
     _db.SessionLocal = MagicMock()
     _db.ModelEndpoint = MagicMock()
     sys.modules["src.database"] = _db
+
+
+# ---------------------------------------------------------------------------
+# Genuine core.database capture — fixes an order-dependence bug in this suite.
+#
+# Several test modules replace sys.modules entries for core modules with
+# MagicMock stubs at IMPORT time and never restore them (see
+# tests/test_auth_event_loop.py:68 and tests/test_auth_regressions.py:69).
+# pytest collects test modules alphabetically, so anything imported after those
+# modules receives a mock instead of the real ORM models — tests then pass in
+# isolation and fail in the full suite (or raise a SQLAlchemy "metaclass
+# conflict" when the real module is re-loaded alongside a stubbed one).
+#
+# conftest is imported before any test module, so capturing the real module
+# here gives tests that genuinely need the database a reference that test
+# order cannot poison.
+# ---------------------------------------------------------------------------
+import pytest as _pytest  # noqa: E402
+
+try:
+    import core.database as _genuine_core_database  # noqa: E402,F401
+except Exception:  # pragma: no cover - only when the DB layer cannot import
+    _genuine_core_database = None
+
+
+@_pytest.fixture
+def real_core_database():
+    """The genuine ``core.database`` module, immune to test-order stubbing."""
+    if _genuine_core_database is None:
+        _pytest.skip("core.database could not be imported in this environment")
+    return _genuine_core_database

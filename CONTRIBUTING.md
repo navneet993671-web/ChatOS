@@ -1,4 +1,4 @@
-# Contributing to Odysseus
+# Contributing to Misantropic
 
 Thanks for helping. The project is moving quickly, so the best contributions are focused, easy to review, and easy to test.
 
@@ -15,7 +15,7 @@ Docker is the recommended path for normal testing:
 
 ```bash
 git clone https://github.com/pewdiepie-archdaemon/odysseus.git
-cd odysseus
+cd misantropic
 cp .env.example .env
 docker compose up -d --build
 ```
@@ -46,7 +46,7 @@ For Docker-related changes:
 ```bash
 docker compose config
 docker compose up -d --build
-docker compose logs --tail=120 odysseus
+docker compose logs --tail=120 misantropic
 ```
 
 Mention what you ran in the pull request description. If you could not run a check, say so.
