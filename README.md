@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Misantropic
 ───────────────────────────────────────────────
  ⊹ ࣪ ˖ ૮( ˶ᵔ ᵕ ᵔ˶ )っ  Misantropic vers. 1.0
@@ -697,3 +698,6 @@ MIT -- see [LICENSE](LICENSE) and [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md).
                ~^~  all aboard!  ~^~
        ~^~^~~^~^~~^~^~~^~^~~^~^~~^~^~~^~^~~^~^~
 ```
+=======
+# Misantropic
+>>>>>>> 3cb9429fa44edac662621b7c373bef18e01b234f
