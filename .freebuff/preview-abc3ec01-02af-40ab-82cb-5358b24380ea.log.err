@@ -1,0 +1,98 @@
+2026-09-19 20:20:53,877 - core.auth - INFO - Auth config loaded
+2026-09-19 20:20:53,878 - core.auth - INFO - Loaded 4 session(s) from disk
+2026-09-19 20:20:53,880 - app - INFO - Auth middleware enabled (AUTH_ENABLED=true)
+2026-09-19 20:20:54,592 - services.youtube.youtube_handler - WARNING - youtube-transcript-api not installed: No module named 'youtube_transcript_api'
+2026-09-19 20:20:54,634 - httpx - INFO - HTTP Request: POST http://localhost:11434/v1/embeddings "HTTP/1.1 404 Not Found"
+2026-09-19 20:20:54,634 - src.embeddings - WARNING - HTTP embedding API unavailable (Client error '404 Not Found' for url 'http://localhost:11434/v1/embeddings'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404); using local FastEmbed for the rest of this process
+Fetching 8 files:   0%|          | 0/8 [00:00<?, ?it/s]Fetching 8 files: 100%|##########| 8/8 [00:00<?, ?it/s]
+2026-09-19 20:20:57,145 - src.embeddings - INFO - FastEmbed loaded model=sentence-transformers/all-MiniLM-L6-v2
+2026-09-19 20:20:57,165 - src.embeddings - INFO - Embedding dimension: 384 (model=sentence-transformers/all-MiniLM-L6-v2)
+2026-09-19 20:20:57,167 - src.embeddings - INFO - Using local FastEmbed: model=sentence-transformers/all-MiniLM-L6-v2
+2026-09-19 20:20:57,167 - src.rag_vector - INFO - Embedding: local://fastembed model=sentence-transformers/all-MiniLM-L6-v2
+2026-09-19 20:21:02,314 - src.rag_vector - ERROR - VectorRAG init failed: ChromaDB is not reachable at localhost:8100. Start the ChromaDB service (e.g. `docker compose up chromadb`) or set CHROMADB_HOST / CHROMADB_PORT to point at a running instance.
+2026-09-19 20:21:02,315 - src.rag_singleton - WARNING - VectorRAG created but not healthy, will retry later
+2026-09-19 20:21:02,331 - app - INFO - Vector document RAG not available at startup (ChromaDB may not be reachable yet — routes will retry lazily)
+2026-09-19 20:21:02,465 - core.session_manager - INFO - Loaded 12 session(s) (metadata only)
+2026-09-19 20:21:02,477 - src.upload_handler - WARNING - python-magic not available, falling back to basic detection
+2026-09-19 20:21:02,479 - src.personal_docs - INFO - Refreshed index: 0 documents from 1 directories
+Fetching 8 files:   0%|          | 0/8 [00:00<?, ?it/s]Fetching 8 files: 100%|##########| 8/8 [00:00<?, ?it/s]
+2026-09-19 20:21:03,244 - src.embeddings - INFO - FastEmbed loaded model=sentence-transformers/all-MiniLM-L6-v2
+2026-09-19 20:21:03,261 - src.embeddings - INFO - Embedding dimension: 384 (model=sentence-transformers/all-MiniLM-L6-v2)
+2026-09-19 20:21:03,262 - src.embeddings - INFO - Using local FastEmbed: model=sentence-transformers/all-MiniLM-L6-v2
+2026-09-19 20:21:03,263 - src.memory_vector - INFO - MemoryVectorStore using embeddings: local://fastembed
+2026-09-19 20:21:07,289 - src.memory_vector - ERROR - MemoryVectorStore init failed: ChromaDB is not reachable at localhost:8100. Start the ChromaDB service (e.g. `docker compose up chromadb`) or set CHROMADB_HOST / CHROMADB_PORT to point at a running instance.
+2026-09-19 20:21:07,289 - src.app_initializer - WARNING - MemoryVectorStore DEGRADED: ChromaDB vector memory unavailable
+2026-09-19 20:21:07,312 - src.research_handler - INFO - Legacy research_engine.py not found — DeepResearcher only
+2026-09-19 20:21:07,322 - app - INFO - TTS service initialized (provider managed via admin settings)
+2026-09-19 20:21:07,592 - app - INFO - STT service initialized (provider managed via settings)
+2026-09-19 20:21:07,624 - app - INFO - Voice service initialized (enabled=True, stt=local, tts=local)
+2026-09-19 20:21:07,821 - app - INFO - Video editing initialized (server_editing=False, ffmpeg=not installed)
+2026-09-19 20:21:07,852 - app - INFO - Bots initialized (6 templates)
+2026-09-19 20:21:08,011 - app - INFO - MCP routes initialized
+2026-09-19 20:21:08,015 - app - INFO - AI interaction tools initialized (session, memory, RAG, UI control)
+2026-09-19 20:21:08,027 - app - INFO - Webhook & API token routes initialized
+2026-09-19 20:21:08,090 - routes.email_pollers - INFO - Started scheduled email poller
+INFO:     Started server process [16172]
+INFO:     Waiting for application startup.
+2026-09-19 20:21:08,185 - app - INFO - Application starting up...
+2026-09-19 20:21:08,204 - src.bg_monitor - INFO - Background-job monitor started (poll 5s)
+2026-09-19 20:21:08,232 - src.task_scheduler - INFO - Task scheduler started (concurrency cap: 1)
+2026-09-19 20:21:08,232 - app - INFO - Application startup complete
+2026-09-19 20:21:08,273 - src.builtin_mcp - INFO - NPX binary resolved to: C:\Program Files\nodejs\npx.CMD
+INFO:     Application startup complete.
+2026-09-19 20:21:08,273 - src.mcp_manager - WARNING - MCP package not installed. Install with: pip install mcp
+2026-09-19 20:21:08,273 - src.builtin_mcp - WARNING - Built-in MCP server failed to connect: Built-in: Image Generation
+2026-09-19 20:21:08,291 - src.mcp_manager - WARNING - MCP package not installed. Install with: pip install mcp
+2026-09-19 20:21:08,291 - src.builtin_mcp - WARNING - Built-in MCP server failed to connect: Built-in: Memory
+2026-09-19 20:21:08,291 - src.mcp_manager - WARNING - MCP package not installed. Install with: pip install mcp
+2026-09-19 20:21:08,291 - src.builtin_mcp - WARNING - Built-in MCP server failed to connect: Built-in: RAG
+2026-09-19 20:21:08,291 - src.mcp_manager - WARNING - MCP package not installed. Install with: pip install mcp
+2026-09-19 20:21:08,291 - src.builtin_mcp - WARNING - Built-in MCP server failed to connect: Built-in: Email
+INFO:     Uvicorn running on http://127.0.0.1:7001 (Press CTRL+C to quit)
+Fetching 8 files:   0%|          | 0/8 [00:00<?, ?it/s]Fetching 8 files: 100%|##########| 8/8 [00:00<?, ?it/s]
+2026-09-19 20:21:09,079 - src.embeddings - INFO - FastEmbed loaded model=sentence-transformers/all-MiniLM-L6-v2
+2026-09-19 20:21:09,079 - src.embeddings - INFO - Embedding dimension: 384 (model=sentence-transformers/all-MiniLM-L6-v2)
+2026-09-19 20:21:09,079 - src.embeddings - INFO - Using local FastEmbed: model=sentence-transformers/all-MiniLM-L6-v2
+2026-09-19 20:21:13,086 - src.tool_index - WARNING - ToolIndex init failed (will retry in 30.0s): ChromaDB is not reachable at localhost:8100. Start the ChromaDB service (e.g. `docker compose up chromadb`) or set CHROMADB_HOST / CHROMADB_PORT to point at a running instance.
+2026-09-19 20:21:16,538 - src.builtin_mcp - WARNING - Built-in: Browser is not available.
+  Reason: npm package '@playwright/mcp@latest' is not installed in the npx cache.
+  Impact: tools provided by this MCP server will be unavailable.
+  Fix:    npx.CMD -y @playwright/mcp@latest --version
+          (run once, then restart Misantropic)
+  Notes:  this server is optional; see README.md 'Built-in MCP servers' for details.
+2026-09-19 20:21:33,855 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 20:23:20,170 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 20:23:20,170 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 20:23:20,203 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 20:23:20,573 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 20:23:21,693 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 20:23:29,904 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 20:23:33,186 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 20:24:35,895 - routes.email_helpers - WARNING - SMTP not configured — add an Email Account in Settings or set env vars
+2026-09-19 20:24:35,897 - routes.email_helpers - WARNING - IMAP not configured — add an Email Account in Settings or set env vars
+2026-09-19 20:24:35,934 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 20:24:36,212 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 20:24:46,557 - routes.chat_routes - INFO - [doc-inject] chat_mode=chat, active_doc_id=''
+2026-09-19 20:24:46,649 - src.chat_handler - INFO - Preset None: temp=1.0, max_tokens=0
+2026-09-19 20:24:46,675 - src.search.core - INFO - Starting comprehensive search for: 1234
+2026-09-19 20:24:50,765 - src.search.providers - WARNING - SearXNG JSON API search failed: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 20:24:54,904 - src.search.providers - ERROR - SearXNG search failed: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 20:24:59,036 - src.search.providers - WARNING - SearXNG JSON API search failed: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 20:25:03,134 - src.search.providers - ERROR - SearXNG search failed: [WinError 10061] No connection could be made because the target machine actively refused it
+2026-09-19 20:25:03,134 - src.search.providers - WARNING - duckduckgo-search package not installed; using HTML fallback
+2026-09-19 20:25:03,405 - httpx - INFO - HTTP Request: GET https://html.duckduckgo.com/html/?q=1234 "HTTP/1.1 202 Accepted"
+2026-09-19 20:25:03,436 - src.search.providers - INFO - DuckDuckGo HTML search returned 0 results
+2026-09-19 20:25:03,436 - src.search.providers - WARNING - duckduckgo-search package not installed; using HTML fallback
+2026-09-19 20:25:03,659 - httpx - INFO - HTTP Request: GET https://html.duckduckgo.com/html/?q=1234 "HTTP/1.1 202 Accepted"
+2026-09-19 20:25:03,683 - src.search.providers - INFO - DuckDuckGo HTML search returned 0 results
+2026-09-19 20:25:03,683 - src.search.core - WARNING - No search results found. Tried: searxng:empty, duckduckgo:empty. All providers returned empty — possibly a niche query or upstream rate-limiting; rephrasing or using the browser tool for a specific URL may help.
+2026-09-19 20:25:03,722 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 20:25:03,753 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/slots "HTTP/1.1 404 Not Found"
+2026-09-19 20:25:03,788 - httpx - INFO - HTTP Request: GET http://127.0.0.1:11434/v1/models "HTTP/1.1 200 OK"
+2026-09-19 20:25:03,788 - src.model_context - INFO - Context length for llama3.2:1b: 128000
+2026-09-19 20:25:03,792 - routes.chat_routes - INFO - [doc-inject] no active doc for session f6e98178-a068-4c09-a391-197d3c136d7e
+2026-09-19 20:25:15,317 - httpx - INFO - HTTP Request: POST http://127.0.0.1:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2026-09-19 20:25:20,764 - httpx - INFO - HTTP Request: POST http://127.0.0.1:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2026-09-19 20:25:20,766 - src.llm_core - INFO - LLM async call to http://127.0.0.1:11434/v1/chat/completions succeeded in 1.53s (attempt 1)
+2026-09-19 20:25:20,795 - routes.chat_helpers - INFO - Auto-named session f6e98178-a068-4c09-a391-197d3c136d7e: Conversation Begins Today

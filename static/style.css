@@ -16098,6 +16098,74 @@ body:not(.email-doc-split-active) #email-lib-modal.email-lib-fullscreen:not(.mod
 .gallery-modal-content .modal-header h4 {
   font-size: 1rem;
 }
+
+/* ── Agents panel (static/js/agents.js) ─────────────────────────────────────
+   The panel deliberately follows the geometry of the other tool modals instead
+   of inventing its own, so moving between Agents and — say — Brain is not a
+   jump in size or position. Two regimes, matching those modules:
+
+     >= 769px  a centered dialog, sized like the gallery modal, which is the
+               closest sibling (a list + detail UI rather than a single form).
+     <= 768px  the same sheet / full-viewport treatment the `@media` block
+               further up gives #tasks-modal, #memory-modal, #settings-modal
+               and the rest: full width, full dvh, top-rounded corners.
+
+   The narrow rule is ID-scoped on purpose. `.modal-content` also receives
+   `width:100% !important; height:auto !important` plus a child clip in that
+   media block, and `height:auto` is precisely what breaks this panel: with no
+   definite height, `flex:1; overflow-y:auto` on the body cannot resolve, so
+   the list and the create form get clipped and cannot be scrolled. The ID
+   selector wins on specificity, leaving the shared rules untouched for every
+   other modal. The explicit height in the wide regime satisfies the same
+   requirement — a definite box for the body to scroll inside. */
+@media (min-width: 769px) {
+  .agents-modal-content {
+    width: min(820px, 94vw);
+    height: min(720px, 88vh);
+    max-height: 88vh;
+    border-radius: 12px;
+    font-size: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media (max-width: 768px) {
+  /* Same computed box as the full-viewport tool modals in the sheet block. */
+  #agents-modal .agents-modal-content {
+    width: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    border-radius: 14px 14px 0 0 !important;
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+    font-size: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+}
+.agents-modal-content .modal-header h4 {
+  font-size: 1rem;
+}
+/* The body owns the scrolling, so the header and tab strip stay put while a
+   long run or activity list scrolls underneath them. */
+.agents-modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 12px 14px 16px;
+}
+/* Sheet mode slides `.modal-content` in from `translateY(100%)`. The other
+   tool modals leave it settled at translateY(0) because flex-end plus a
+   full-viewport height already places them at y=0; this panel must not depend
+   on that animation having run, or a reduced-motion / programmatic open parks
+   it a full height below the fold (measured: top edge exactly at the viewport
+   bottom). `transform:none` IS that settled state, and an !important
+   declaration outranks a running animation, so the box is always correct. */
+#agents-modal .agents-modal-content {
+  transform: none !important;
+}
 .gallery-stats {
   font-size: 10px;
   color: color-mix(in srgb, var(--fg) 50%, transparent);

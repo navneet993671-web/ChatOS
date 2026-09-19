@@ -810,6 +810,18 @@
         <div class="section-header-flex">
           <span class="section-title"><svg class="section-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Tools</span>
         </div>
+        <!-- Agents — persistent AI workers. Opens the panel in static/js/agents.js,
+             which is a view over the existing /api/bots backend (services/bots). -->
+        <div class="list-item" id="tool-agents-btn" title="Persistent AI workers">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:0.5;">
+            <rect x="3" y="11" width="18" height="10" rx="2"/>
+            <circle cx="12" cy="5" r="2"/>
+            <path d="M12 7v4"/>
+            <line x1="8" y1="16" x2="8.01" y2="16"/>
+            <line x1="16" y1="16" x2="16.01" y2="16"/>
+          </svg>
+          <span class="grow">Agents</span>
+        </div>
         <div class="list-item" id="tool-memory-btn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -1327,6 +1339,19 @@
         <button class="close-btn" id="close-cookbook-modal">✖</button>
       </div>
       <div class="modal-body cookbook-body"></div>
+    </div>
+  </div>
+
+  <!-- Agents Modal — persistent AI workers (see static/js/agents.js).
+       The body is rendered entirely by that module; this is just the shell so
+       it inherits the app's modal styling, drag behaviour and close button. -->
+  <div id="agents-modal" class="modal hidden">
+    <div class="modal-content agents-modal-content" style="background:var(--bg)">
+      <div class="modal-header">
+        <h4><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="16" y1="16" x2="16.01" y2="16"/></svg>Agents</h4>
+        <button class="close-btn" id="close-agents-modal" aria-label="Close agents modal">✖</button>
+      </div>
+      <div class="modal-body agents-modal-body" id="agents-body"></div>
     </div>
   </div>
 
@@ -2291,6 +2316,7 @@
 <script type="module" src="/static/js/settings.js"></script>
 <script type="module" src="/static/js/admin.js"></script>
 <script type="module" src="/static/js/assistant.js"></script>
+<script type="module" src="/static/js/agents.js"></script>  <!-- Agents panel; loaded BEFORE app.js, which wires #tool-agents-btn -->
 <script type="module" src="/static/app.js"></script>  <!-- app.js must be LAST -->
 <script type="module" src="/static/js/init.js"></script>
 <script nonce="{{CSP_NONCE}}">if('serviceWorker' in navigator){navigator.serviceWorker.register('/static/sw.js').catch(()=>{});}</script>

@@ -69,6 +69,11 @@ use a venv if you need to add packages.
 user's real data — **do not delete or regenerate it**, and never run
 `Base.metadata.create_all` against a stale copy expecting a clean slate.
 
+`auth.json` is read **once at startup** into memory (`AuthManager._load`), so any
+edit to a user's `is_admin` or `privileges` needs a server restart to take
+effect. There is no API for promoting an existing user — `is_admin` is only
+accepted when the account is created (`POST /api/auth/users`).
+
 ---
 
 ## 2. Run the server
@@ -89,9 +94,9 @@ python -m uvicorn app:app --host 127.0.0.1 --port 7001
 Add `--reload` for development. **The working directory must be the repo root**
 (see `DATABASE_URL` above).
 
-Cold start takes roughly 15–25 s: it loads the FastAPI app, the FastEmbed ONNX
-embedding model, and the TTS/STT/MCP subsystems. `curl` will refuse the
-connection until then.
+Cold start takes roughly 30 s (measured ~30–35 s): it loads the FastAPI app, the
+FastEmbed ONNX embedding model, and the TTS/STT/MCP subsystems. `curl` will
+refuse the connection until then.
 
 ### Detached start (Windows / this preview)
 
@@ -100,7 +105,7 @@ connection until then.
 must go to **different** files.
 
 ```
-powershell -NoProfile -Command "(Start-Process -FilePath 'C:\Users\acer\AppData\Local\Programs\Python\Python310\python.exe' -ArgumentList '-m','uvicorn','app:app','--host','127.0.0.1','--port','7001' -WorkingDirectory 'C:\Users\acer\Downloads\Misantropic\Misantropic' -RedirectStandardOutput '<log>' -RedirectStandardError '<log>.err' -WindowStyle Hidden -PassThru).Id"
+powershell -NoProfile -Command "(Start-Process -FilePath 'C:\Users\acer\AppData\Local\Programs\Python\Python310\python.exe' -ArgumentList '-m','uvicorn','app:app','--host','127.0.0.1','--port','7001' -WorkingDirectory 'C:\Users\acer\Downloads\Misantropic' -RedirectStandardOutput '<log>' -RedirectStandardError '<log>.err' -WindowStyle Hidden -PassThru).Id"
 ```
 
 Note: uvicorn logs to **stderr**, so the `.err` file is the one with content and

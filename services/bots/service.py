@@ -328,7 +328,18 @@ class BotService:
             for task in paused:
                 task.status = "paused"
             info = {"id": bot.id, "name": bot.name, "missions_paused": len(paused)}
-            db.delete(bot)  # runs/approvals cascade via FK
+            # Delete the children explicitly. The FKs declare
+            # ondelete="CASCADE", but SQLite only enforces foreign keys when
+            # PRAGMA foreign_keys=ON is set per connection and nothing in
+            # core/database.py enables it — so `db.delete(bot)` on its own
+            # silently orphaned every run and approval for the deleted bot.
+            db.query(BotApproval).filter(
+                BotApproval.bot_id == bot.id
+            ).delete(synchronize_session=False)
+            db.query(BotRun).filter(
+                BotRun.bot_id == bot.id
+            ).delete(synchronize_session=False)
+            db.delete(bot)
             db.commit()
             return info
         finally:
@@ -787,7 +798,10 @@ class BotService:
                 BotRun.bot_id == bot.id,
                 BotRun.mission_id == run.mission_id,
             ).count()
-            if attempts > (bot.max_retries or 0) + 1:
+            # max_retries counts retries *after* the first attempt, so
+            # max_retries=0 must refuse the very first retry. The previous
+            # `> max_retries + 1` comparison let one retry through.
+            if attempts > (bot.max_retries or 0):
                 raise BotServiceError(
                     f"Retry limit reached ({bot.max_retries or 0} retries)",
                     code="retry_limit", status=429,
@@ -820,8 +834,15 @@ class BotService:
             run = db.query(BotRun).filter(BotRun.id == run_id).first()
             if run:
                 run.status = "waiting_approval"
-            bot.status = "waiting_approval"
-            bot.updated_at = _now()
+            # Re-fetch the bot inside THIS session. The `bot` argument can come
+            # from a different, already-closed session, in which case setting
+            # an attribute on it marks that dead session dirty and the update is
+            # silently dropped — leaving the bot reading "running" while its run
+            # sits in waiting_approval.
+            bot_row = db.query(Bot).filter(Bot.id == bot.id).first()
+            if bot_row:
+                bot_row.status = "waiting_approval"
+                bot_row.updated_at = _now()
             db.commit()
             view = approval_to_dict(approval)
         finally:

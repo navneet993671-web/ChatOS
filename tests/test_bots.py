@@ -7,6 +7,7 @@ are asserted directly.
 """
 
 import json
+import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 from unittest.mock import MagicMock
@@ -50,6 +51,30 @@ def fresh_db(tmp_path, monkeypatch):
     # binding unless patched too. This is the part that actually matters.
     import services.bots.service as bots_service_mod
     monkeypatch.setattr(bots_service_mod, "SessionLocal", test_sessionlocal)
+
+    # This module binds SessionLocal by name at import time too, so patching
+    # core_db and the service module above is NOT sufficient: a bare
+    # `SessionLocal()` in a test below would still open the developer's live
+    # database. That is not hypothetical — it is exactly how 26 "Test Bot" rows,
+    # a hardcoded `r1` run and 13 active "[Bot] Test Bot" scheduled tasks ended
+    # up in data/app.db, where the real scheduler was free to execute them.
+    test_module = sys.modules[__name__]
+    monkeypatch.setattr(test_module, "SessionLocal", test_sessionlocal)
+
+    # Same trap for any other already-imported module in the bot path that
+    # holds its own binding of the name.
+    for _mod_name in ("src.task_scheduler", "src.event_bus"):
+        _mod = sys.modules.get(_mod_name)
+        if _mod is not None and getattr(_mod, "SessionLocal", None) is not None:
+            monkeypatch.setattr(_mod, "SessionLocal", test_sessionlocal)
+
+    # Fail closed. If a future edit re-introduces a live-database path, the
+    # fixture errors here instead of silently writing to real user data.
+    assert core_db.SessionLocal is test_sessionlocal
+    assert test_module.SessionLocal is test_sessionlocal
+    assert bots_service_mod.SessionLocal is test_sessionlocal
+    assert str(test_engine.url.database) == str(db_path)
+    assert Path(test_engine.url.database).parent == Path(tmp_path)
 
     # create_all against the *test* engine only.
     core_db.Base.metadata.create_all(bind=test_engine)

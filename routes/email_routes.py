@@ -592,6 +592,22 @@ def setup_email_routes():
         the fallback config lookup is scoped to this user's accounts only.
         """
         try:
+            # No IMAP account configured is the normal first-run state, not a
+            # fault. The Email panel POLLS this route, so attempting a
+            # connection anyway produced a connection-refused ERROR on every
+            # poll — plus a resolver warning each time — and a red "Mail
+            # operation failed" banner on a machine that simply has no email
+            # account yet. Detect that case before touching the network.
+            import os as _os
+            from routes.email_helpers import _list_email_accounts
+            from src.settings import get_setting as _get_setting
+            if (not _list_email_accounts()
+                    and not (_get_setting("imap_host") or "").strip()
+                    and not (_os.getenv("IMAP_HOST") or "").strip()):
+                return {
+                    "emails": [], "total": 0, "folder": folder,
+                    "offset": offset, "configured": False,
+                }
             conn = _imap_connect(account_id, owner=owner)
             select_status, _ = conn.select(_q(folder), readonly=True)
             if select_status != "OK":

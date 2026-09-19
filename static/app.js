@@ -26,6 +26,7 @@ import calendarModule from './js/calendar.js';
 import notesModule from './js/notes.js';
 import adminModule from './js/admin.js';
 import settingsModule from './js/settings.js';
+import agentsModule from './js/agents.js';
 // Eagerly bind unified minimize/restore behavior across all tool modals.
 import './js/modalManager.js';
 // Desktop window tiling — drag a modal near an edge/corner to snap.
@@ -820,6 +821,15 @@ function initializeEventListeners() {
     });
   }
 
+  // Agents tool button — persistent AI workers (static/js/agents.js). The
+  // panel owns its own modal lifecycle, so this is a plain open().
+  const toolAgentsBtn = el('tool-agents-btn');
+  if (toolAgentsBtn) {
+    toolAgentsBtn.addEventListener('click', () => {
+      if (agentsModule) agentsModule.open();
+    });
+  }
+
   // Gallery tool button
   const toolGalleryBtn = el('tool-gallery-btn');
   if (toolGalleryBtn) {
@@ -1000,6 +1010,7 @@ function initializeEventListeners() {
     },
     '/memory':   () => document.getElementById('tool-memory-btn')?.click(),
     '/gallery':  () => document.getElementById('tool-gallery-btn')?.click(),
+    '/agents':   () => document.getElementById('tool-agents-btn')?.click(),
     '/tasks':    () => document.getElementById('tool-tasks-btn')?.click(),
     '/library':  () => sessionModule && sessionModule.openLibrary && sessionModule.openLibrary(),
   };
